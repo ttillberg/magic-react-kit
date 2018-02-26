@@ -46,6 +46,17 @@ switch (script) {
     )
     break
   }
+
+  case 'ssr': {
+    result = spawn.sync(
+      'node',
+      nodeArgs
+        .concat(require.resolve('../scripts/ssr/start-ssr'))
+        .concat(args.slice(scriptIndex + 1)),
+      { stdio: 'inherit' }
+    )
+    break
+  }
   default:
     console.log('Unknown script "' + script + '".')
 }
