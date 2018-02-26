@@ -30,7 +30,7 @@ switch (script) {
     result = spawn.sync(
       'node',
       nodeArgs
-        .concat(require.resolve('../scripts/start/start'))
+        .concat(require.resolve('../scripts/hot-dev-front-end/start'))
         .concat(args.slice(scriptIndex + 1)),
       { stdio: 'inherit' }
     )
@@ -40,19 +40,14 @@ switch (script) {
     result = spawn.sync(
       'node',
       nodeArgs
-        .concat(require.resolve('../scripts/serve/serve'))
+        .concat(require.resolve('../scripts/hot-dev-ssr/serve'))
         .concat(args.slice(scriptIndex + 1)),
       { stdio: 'inherit' }
     )
-
     break
   }
   default:
     console.log('Unknown script "' + script + '".')
-    console.log('Perhaps you need to update react-scripts?')
-    console.log(
-      'See: https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#updating-to-new-releases'
-    )
 }
 
 if (result && result.signal) {

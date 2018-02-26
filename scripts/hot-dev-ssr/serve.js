@@ -18,13 +18,10 @@ build().then(() => {
   })
 
   console.log('[webpack] Launching hot front-end')
-  spawn('node', [path.resolve(__dirname, '../start/start.js')], {
+  spawn('node', [path.resolve(__dirname, '../hot-dev-frontend/start.js')], {
     stdio: 'inherit',
   })
 })
-
-// require('../start/start')
-let first = false
 
 function build() {
   var compiler = webpack(config)

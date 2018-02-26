@@ -2,19 +2,20 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import express from 'express'
 import App from 'Main'
+import Helmet from 'react-helmet'
 
 const app = express()
 
 app.get('*', (req, res) => {
   let application = renderToString(<App url={req.url} />)
+  const helmet = Helmet.renderStatic()
+  let title = helmet.title.toString()
+  let meta = helmet.meta.toString()
+  let link = helmet.link.toString()
   let html = `<!doctype html>
-  <html class="no-js" lang="en-gb">
+  <html ${helmet.htmlAttributes.toString()}>
     <head>
-      <meta charset="utf-8">
-      <meta http-equiv="x-ua-compatible" content="ie=edge">
-      <title>Server rendered</title>
-      <meta name="description" content="">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+      ${[title, meta, link].join('')}  
     </head>
     <body>
       <div id="root">${application}</div>
