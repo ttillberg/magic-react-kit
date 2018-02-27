@@ -1,24 +1,24 @@
 const path = require('path')
-const StartServerPlugin = require('start-server-webpack-plugin')
 const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
-const paths = require('../../../config/paths')
+const { resolveApp, resolveOwn } = require('../../../config/paths')
 
 module.exports = {
   name: 'SSR-PROD',
+  devtool: 'source-map',
   entry: [require.resolve('../src/server.js')],
   target: 'node',
   output: {
-    path: path.resolve(__dirname, '../build/'),
+    path: resolveApp('build'),
     filename: 'index.js',
     libraryTarget: 'commonjs2',
   },
 
   externals: [
-    nodeExternals({
-      modulesDir: path.resolve(__dirname, '../../../node_modules'),
-      whitelist: [],
-    }),
+    // nodeExternals({
+    //   modulesDir: path.resolve(__dirname, '../../../node_modules'),
+    //   whitelist: [],
+    // }),
   ],
 
   resolve: {
@@ -26,7 +26,7 @@ module.exports = {
     modules: [
       path.resolve(__dirname, '../src'),
       'node_modules', // app modules
-      paths.appSrc,
+      resolveApp('src'),
       path.resolve(__dirname, '../../../node_modules'), // server node modules
     ],
   },
@@ -49,7 +49,7 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        include: [path.resolve(__dirname, '../src'), paths.appSrc],
+        include: [path.resolve(__dirname, '../src'), resolveApp('src')],
         exclude: /node_modules/,
         use: {
           loader: require.resolve('babel-loader'),
@@ -58,9 +58,17 @@ module.exports = {
               [require.resolve('@babel/preset-env'), { modules: false }],
               require.resolve('@babel/preset-react'),
               require.resolve('@babel/preset-flow'),
+              require.resolve('@babel/preset-stage-2'),
             ],
             plugins: [require.resolve('react-hot-loader/babel')],
           },
+        },
+      },
+      {
+        test: /\.scss$/,
+        include: [resolveApp('src')],
+        use: {
+          loader: require.resolve('ignore-loader'),
         },
       },
     ],

@@ -1,8 +1,32 @@
+const { resolveApp, resolveOwn } = require('../../config/paths')
 const webpack = require('webpack')
 var formatWebpackMessages = require('react-dev-utils/formatWebpackMessages')
-const webpackConfig = require('./config/webpack.server.config')
+const webpackConfig = require('./config/webpack.config.client')
+var spawn = require('cross-spawn')
+const DEBUG = process.env.DEBUG
 
-module.exports = function build() {
+var rimraf = require('rimraf')
+var path = require('path')
+
+rimraf.sync(resolveApp('build'))
+
+build()
+  .then(() => {
+    console.log('[webpack] done')
+
+    require('./start-ssr')().then(() => {
+      console.log('[webpack] Launching hot backend')
+      spawn('node', ['.'], {
+        stdio: 'inherit',
+        cwd: resolveApp('build'),
+      })
+    })
+  })
+  .catch(err => {
+    console.log('nope', err)
+  })
+
+function build() {
   return new Promise((resolve, reject) => {
     var compiler = webpack(webpackConfig, (err, stats) => {
       if (err) {
@@ -17,7 +41,6 @@ module.exports = function build() {
         }
         return reject(new Error(messages.errors.join('\n\n')))
       }
-
       return resolve({
         stats,
         warnings: messages.warnings,

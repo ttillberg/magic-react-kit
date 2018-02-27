@@ -1,14 +1,21 @@
 import http from 'http'
+import path from 'path'
+import fs from 'fs'
 import express from 'express'
 import React from 'react'
 import Helmet from 'react-helmet'
 import { renderToString } from 'react-dom/server'
 import App from 'main'
+// import { resolveApp, resolveOwn } from '../../../config/paths'
+
+var appDirectory = fs.realpathSync(process.cwd())
 
 startServer()
 
 function startServer() {
   const app = express()
+  // var assetPath = path.join(__dirname, 'assets')
+  app.use(express.static('assets'))
   app.get('*', (req, res) => {
     var html = render(req)
     res.send(html)
@@ -31,7 +38,7 @@ function render(req) {
 	</head>
 	<body>
 		<div id="root">${application}</div>
-		<script src="http://localhost:3000/static/bundle.js"></script>
+		<script src="/client.js"></script>
 	</body>
 </html>`
 }

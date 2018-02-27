@@ -51,7 +51,8 @@ switch (script) {
     result = spawn.sync(
       'node',
       nodeArgs
-        .concat(require.resolve('../scripts/ssr/start-ssr'))
+        // .concat(require.resolve('../scripts/ssr/start-ssr'))
+        .concat(require.resolve('../scripts/ssr/build-client'))
         .concat(args.slice(scriptIndex + 1)),
       { stdio: 'inherit' }
     )
