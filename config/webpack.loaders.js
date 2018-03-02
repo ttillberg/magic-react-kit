@@ -1,4 +1,8 @@
 const paths = require('./paths')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var autoprefixer = require('autoprefixer')
+var path = require('path')
 
 module.exports = {
   rules: [
@@ -21,6 +25,25 @@ module.exports = {
           ],
         },
       },
+    },
+    {
+      test: /\.scss$/,
+      use:
+        // ExtractTextPlugin.extract(
+        [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [autoprefixer],
+              // filename: 'styles.css',
+              allChunks: true,
+            },
+          },
+          'sass-loader',
+        ],
+      // ),
     },
   ],
 }

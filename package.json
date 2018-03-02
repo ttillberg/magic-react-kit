@@ -5,12 +5,17 @@
   "main": "index.js",
   "author": "",
   "license": "ISC",
-  "files": ["bin", "config", "scripts"],
+  "files": [
+    "bin",
+    "config",
+    "scripts"
+  ],
   "bin": {
     "engine": "./bin/engine.js"
   },
   "dependencies": {
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "html-webpack-plugin": "^2.30.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.40",

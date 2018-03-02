@@ -1,28 +1,29 @@
 var path = require('path')
-var paths = require('./paths')
+var paths = require('../../config/paths')
+var HtmlWebpackPlugin = require('html-webpack-plugin')
 var webpack = require('webpack')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-var VERSION = 'v' + require(path.resolve(paths.appSrc, '../package.json')).version
+var VERSION = 'v' + require(paths.resolveApp('package.json')).version
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
-
   entry: [
     // bundle the client for webpack-dev-server
     // and connect to the provided endpoint
-    require.resolve('webpack-dev-server/client') + '?http://0.0.0.0:3000',
+    require.resolve('webpack-dev-server/client') + '?http://0.0.0.0:3001',
 
     // bundle the client for hot reloading
     // only- means to only hot reload for successful updates
     require.resolve('webpack/hot/only-dev-server'),
 
-    path.resolve(paths.appSrc, 'index'),
+    paths.resolveApp('src/index'),
   ],
 
   output: {
     filename: 'bundle.js',
-    // required to serve hot from :8080
-    publicPath: '//0.0.0.0:3000/static/',
+    // required to serve hot from :3001
+    publicPath: '//0.0.0.0:3001/',
   },
 
   plugins: [
@@ -39,10 +40,16 @@ module.exports = {
       __DATE__: JSON.stringify(new Date()),
       __BUILD_VERSION__: JSON.stringify(VERSION),
     }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      title: '',
+      template: paths.resolveApp('src/index.html'),
+      hash: true,
+    }),
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
-    modules: [path.resolve(paths.appSrc), 'node_modules'],
+    modules: [paths.resolveApp('src'), 'node_modules'],
   },
-  module: require('./webpack.loaders'),
+  module: require(paths.resolveOwn('config/webpack.loaders')),
 }

@@ -1,14 +1,15 @@
 var http = require('http')
-var chalk = require('chalk')
 var app = require('./server').default
 
 const server = http.createServer(app)
 let currentApp = app
-server.listen(8080)
+server.listen(3000, () => {
+  console.log('🌶  Server-side rendering active on port 3000')
+})
 
 if (module.hot) {
   module.hot.accept('./server', () => {
-    console.log(chalk.magenta('[HTTP] Applying hot update'))
+    console.log('🌶  applying server-side hot update')
 
     server.removeListener('request', currentApp)
 

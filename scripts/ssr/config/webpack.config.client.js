@@ -9,7 +9,6 @@ var VERSION = require(resolveApp('package.json')).version
 
 var parentDir = './'
 var outputPath = resolveApp('build')
-
 var sourceDirs = [path.resolve(__dirname, '../src'), resolveApp('src')]
 
 module.exports = {
@@ -37,7 +36,7 @@ module.exports = {
       },
     }),
     new ExtractTextPlugin({
-      filename: 'assets/styles.scss',
+      filename: 'assets/styles.css',
       allChunks: true,
     }),
   ],
@@ -72,25 +71,12 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               plugins: [autoprefixer],
-              filename: path.join('scripts', VERSION, '/tockr_' + VERSION + '.css'),
+              filename: 'style.css',
               allChunks: true,
             },
           },
           'sass-loader',
         ]),
-        // loader: [
-        //   'style-loader',
-        //   'css-loader',
-        //   {
-        //     loader: 'postcss-loader',
-        //     options: {
-        //       plugins: loader => [
-        //         // require('autoprefixer')({browsers: ['last 3 versions', 'iOS 9']}),
-        //       ],
-        //     },
-        //   },
-        //   'sass-loader',
-        // ],
         include: resolveApp('src'),
         exclude: /node_modules/,
       },

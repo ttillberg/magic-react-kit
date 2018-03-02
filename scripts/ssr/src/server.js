@@ -6,22 +6,24 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { renderToString } from 'react-dom/server'
 import App from 'main'
-// import { resolveApp, resolveOwn } from '../../../config/paths'
 
 var appDirectory = fs.realpathSync(process.cwd())
 
 startServer()
 
 function startServer() {
+  console.log('=> Start server-side-renderer')
   const app = express()
   // var assetPath = path.join(__dirname, 'assets')
   app.use(express.static('assets'))
   app.get('*', (req, res) => {
-    var html = render(req)
+    let html = render(req, '/client.js')
     res.send(html)
   })
   const server = http.createServer(app)
-  server.listen(8080)
+  server.listen(3000, () => {
+    console.log('\n\n📡   127.0.0.1:3000\n\n')
+  })
 }
 
 function render(req) {
@@ -35,6 +37,7 @@ function render(req) {
 <html ${helmet.htmlAttributes.toString()}>
 	<head>
 		${[title, meta, link].join('')}  
+    <link rel="stylesheet" href="/styles.css">
 	</head>
 	<body>
 		<div id="root">${application}</div>

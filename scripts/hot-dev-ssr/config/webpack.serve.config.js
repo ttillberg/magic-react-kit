@@ -1,10 +1,9 @@
 const path = require('path')
-const StartServerPlugin = require('start-server-webpack-plugin')
+const paths = require('../../../config/paths')
 const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
-const paths = require('../../../config/paths')
 
-var hotScript = require.resolve('../../../node_modules/webpack/hot/poll') + '?1000'
+var hotScript = paths.resolveOwn('node_modules/webpack/hot/poll') + '?1000'
 
 module.exports = {
   name: 'SSR',
@@ -25,22 +24,19 @@ module.exports = {
       modulesDir: path.resolve(__dirname, '../../../node_modules'),
       whitelist: [hotScript],
     }),
-    // path.resolve(__dirname, '../../../node_modules'),
   ],
 
   resolve: {
     extensions: ['.js', '.jsx'],
     modules: [
-      //
       path.resolve(__dirname, '../server'), // server modules
       'node_modules', // app modules
-      paths.appSrc, // app src
+      paths.resolveApp('src'), // app src
       path.resolve(__dirname, '../../../node_modules'), // server node modules
     ],
   },
 
   plugins: [
-    // new StartServerPlugin(path.resolve(__dirname, '../server/build/server_reloader_compiled.js')),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
@@ -58,7 +54,7 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        include: [path.resolve(__dirname, '../server'), paths.appSrc],
+        include: [path.resolve(__dirname, '../server'), paths.resolveApp('src')],
         exclude: /node_modules/,
         use: {
           loader: require.resolve('babel-loader'),
@@ -67,9 +63,17 @@ module.exports = {
               [require.resolve('@babel/preset-env'), { modules: false }],
               require.resolve('@babel/preset-react'),
               require.resolve('@babel/preset-flow'),
+              require.resolve('@babel/preset-stage-2'),
             ],
             plugins: [require.resolve('react-hot-loader/babel')],
           },
+        },
+      },
+      {
+        test: /\.scss$/,
+        include: [paths.resolveApp('src')],
+        use: {
+          loader: require.resolve('ignore-loader'),
         },
       },
     ],

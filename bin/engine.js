@@ -26,33 +26,33 @@ const nodeArgs = scriptIndex > 0 ? args.slice(0, scriptIndex) : []
 
 let result
 switch (script) {
-  case 'start': {
+  case 'start-client': {
     result = spawn.sync(
       'node',
       nodeArgs
-        .concat(require.resolve('../scripts/hot-dev-front-end/start'))
+        .concat(require.resolve('../scripts/hot-dev-frontend/start'))
         .concat(args.slice(scriptIndex + 1)),
       { stdio: 'inherit' }
     )
     break
   }
-  case 'serve': {
+  case 'start': {
     result = spawn.sync(
       'node',
       nodeArgs
-        .concat(require.resolve('../scripts/hot-dev-ssr/serve'))
+        .concat(require.resolve('../scripts/hot-dev-ssr/start'))
         .concat(args.slice(scriptIndex + 1)),
       { stdio: 'inherit' }
     )
     break
   }
 
-  case 'ssr': {
+  case 'build': {
     result = spawn.sync(
       'node',
       nodeArgs
         // .concat(require.resolve('../scripts/ssr/start-ssr'))
-        .concat(require.resolve('../scripts/ssr/build-client'))
+        .concat(require.resolve('../scripts/ssr/build'))
         .concat(args.slice(scriptIndex + 1)),
       { stdio: 'inherit' }
     )
