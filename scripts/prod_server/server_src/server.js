@@ -12,7 +12,7 @@ var appDirectory = fs.realpathSync(process.cwd())
 startServer()
 
 function startServer() {
-  console.log('=> Start server-side-renderer')
+  console.log('Start server-side-renderer')
   const app = express()
   // var assetPath = path.join(__dirname, 'assets')
   app.use(express.static('assets'))

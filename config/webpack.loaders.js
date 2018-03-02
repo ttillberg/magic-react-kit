@@ -1,49 +1,52 @@
 const paths = require('./paths')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var autoprefixer = require('autoprefixer')
-var path = require('path')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const autoprefixer = require('autoprefixer')
+
+const testJS = {
+  test: /\.jsx?$/,
+  exclude: /node_modules/,
+  use: {
+    loader: require.resolve('babel-loader'),
+    options: {
+      presets: [
+        require.resolve('@babel/preset-env'),
+        require.resolve('@babel/preset-react'),
+        require.resolve('@babel/preset-flow'),
+        require.resolve('@babel/preset-stage-2'),
+      ],
+      plugins:
+        process.env.NODE_ENV !== 'development'
+          ? []
+          : [
+              require.resolve('react-hot-loader/babel'),
+              process.env.BUILD_TARGET !== 'browser'
+                ? false
+                : require.resolve('babel-plugin-flow-react-proptypes'),
+            ].filter(Boolean),
+    },
+  },
+}
+let scssLoader = [
+  process.env.NODE_ENV === 'development' ? 'style-loader' : false,
+  'css-loader',
+  {
+    loader: 'postcss-loader',
+    options: {
+      plugins: [autoprefixer],
+      allChunks: true,
+    },
+  },
+  'sass-loader',
+].filter(Boolean)
+
+const testSCSS = {
+  exclude: /node_modules/,
+  test: /\.scss$/,
+  use: process.env.NODE_ENV === 'development' ? scssLoader : ExtractTextPlugin.extract(scssLoader),
+}
 
 module.exports = {
-  rules: [
-    {
-      test: /\.jsx?$/,
-      include: paths.appSrc,
-      exclude: /node_modules/,
-      use: {
-        loader: require.resolve('babel-loader'),
-        options: {
-          presets: [
-            require.resolve('@babel/preset-env'),
-            require.resolve('@babel/preset-react'),
-            require.resolve('@babel/preset-flow'),
-            require.resolve('@babel/preset-stage-2'),
-          ],
-          plugins: [
-            require.resolve('react-hot-loader/babel'),
-            require.resolve('babel-plugin-flow-react-proptypes'),
-          ],
-        },
-      },
-    },
-    {
-      test: /\.scss$/,
-      use:
-        // ExtractTextPlugin.extract(
-        [
-          'style-loader',
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: [autoprefixer],
-              // filename: 'styles.css',
-              allChunks: true,
-            },
-          },
-          'sass-loader',
-        ],
-      // ),
-    },
-  ],
+  testJS,
+  testSCSS,
+  rules: [testJS, testSCSS],
 }

@@ -6,6 +6,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 var VERSION = 'v' + require(paths.resolveApp('package.json')).version
 
+const { APP_SOURCE_DIR, APP_ENTRY } = process.env
+
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
@@ -17,7 +19,7 @@ module.exports = {
     // only- means to only hot reload for successful updates
     require.resolve('webpack/hot/only-dev-server'),
 
-    paths.resolveApp('src/index'),
+    APP_ENTRY,
   ],
 
   output: {
@@ -43,13 +45,14 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       title: '',
-      template: paths.resolveApp('src/index.html'),
       hash: true,
     }),
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
-    modules: [paths.resolveApp('src'), 'node_modules'],
+    modules: [APP_SOURCE_DIR, paths.resolveOwn('node_modules')],
   },
-  module: require(paths.resolveOwn('config/webpack.loaders')),
+  module: {
+    rules: require(paths.resolveOwn('config/webpack.loaders')).rules,
+  },
 }

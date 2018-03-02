@@ -1,38 +1,35 @@
 const path = require('path')
-const paths = require('../../../config/paths')
 const webpack = require('webpack')
 const nodeExternals = require('webpack-node-externals')
+const { resolveApp, resolveOwn } = require('../../config/paths')
 
-var hotScript = paths.resolveOwn('node_modules/webpack/hot/poll') + '?1000'
+const { APP_SOURCE_DIR, APP_ENTRY } = process.env
 
 module.exports = {
-  name: 'SSR',
-  entry: [hotScript, require.resolve('../server/server_reloader')],
-  watch: true,
-  watchOptions: {
-    poll: 1000,
-    ignored: /node_modules/,
-  },
+  name: 'SSR-PROD',
+  devtool: 'source-map',
+  entry: [require.resolve('./server_src/server.js')],
   target: 'node',
   output: {
-    path: path.resolve(__dirname, '../server/build/'),
-    filename: 'server_reloader_compiled.js',
+    path: resolveApp('server_dist'),
+    filename: 'server_compiled.js',
     libraryTarget: 'commonjs2',
   },
+
   externals: [
-    nodeExternals({
-      modulesDir: path.resolve(__dirname, '../../../node_modules'),
-      whitelist: [hotScript],
-    }),
+    // nodeExternals({
+    //   modulesDir: path.resolve(__dirname, '../../node_modules'),
+    //   whitelist: [],
+    // }),
   ],
 
   resolve: {
     extensions: ['.js', '.jsx'],
     modules: [
-      path.resolve(__dirname, '../server'), // server modules
+      path.resolve(__dirname, 'server_src'),
       'node_modules', // app modules
-      paths.resolveApp('src'), // app src
-      path.resolve(__dirname, '../../../node_modules'), // server node modules
+      APP_SOURCE_DIR,
+      path.resolve(__dirname, '../../node_modules'), // server node modules
     ],
   },
 
@@ -54,7 +51,7 @@ module.exports = {
     rules: [
       {
         test: /\.jsx?$/,
-        include: [path.resolve(__dirname, '../server'), paths.resolveApp('src')],
+        include: [path.resolve(__dirname, 'server_src'), APP_SOURCE_DIR],
         exclude: /node_modules/,
         use: {
           loader: require.resolve('babel-loader'),
@@ -71,7 +68,8 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        include: [paths.resolveApp('src')],
+        include: [APP_SOURCE_DIR],
+        exclude: /node_modules/,
         use: {
           loader: require.resolve('ignore-loader'),
         },

@@ -1,6 +1,5 @@
 import express from 'express'
-
-import render from './render'
+import render from './render_react_app'
 
 const app = express()
 

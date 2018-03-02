@@ -3,7 +3,7 @@ import { renderToString } from 'react-dom/server'
 import App from 'Main'
 import Helmet from 'react-helmet'
 
-export default function render(req, scriptHref) {
+export default function render_react_app(req, scriptHref) {
   const application = renderToString(<App url={req.url} />)
   const helmet = Helmet.renderStatic()
   const title = helmet.title.toString()

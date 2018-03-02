@@ -2,20 +2,16 @@
   "name": "engine",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "bin": {
+    "magic": "./bin/magic.js"
+  },
   "author": "",
   "license": "ISC",
-  "files": [
-    "bin",
-    "config",
-    "scripts"
-  ],
-  "bin": {
-    "engine": "./bin/engine.js"
-  },
+  "files": ["config", "scripts"],
   "dependencies": {
     "express": "^4.16.2",
-    "html-webpack-plugin": "^2.30.1"
+    "html-webpack-plugin": "^2.30.1",
+    "minimist": "^1.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.40",

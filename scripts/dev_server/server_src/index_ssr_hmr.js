@@ -3,6 +3,7 @@ var app = require('./server').default
 
 const server = http.createServer(app)
 let currentApp = app
+
 server.listen(3000, () => {
   console.log('🌶  Server-side rendering active on port 3000')
 })
@@ -18,6 +19,6 @@ if (module.hot) {
     currentApp = app
   })
   module.hot.addStatusHandler(status => {
-    // console.log(status)
+    process.env.VERBOSE && console.log('[ssr hmr]' + status)
   })
 }
