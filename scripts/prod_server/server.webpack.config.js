@@ -1,12 +1,21 @@
 const path = require('path')
 const webpack = require('webpack')
-const nodeExternals = require('webpack-node-externals')
+const { testJS } = require('../../config/webpack.loaders')
 const { resolveApp, resolveOwn } = require('../../config/paths')
 
-const { APP_SOURCE_DIR, APP_ENTRY } = process.env
+const { APP_PATH, APP_ENTRY } = process.env
+const APP_COMPILE_SERVER_NODE_MODULES = true
+
+const externals = (APP_COMPILE_SERVER_NODE_MODULES && []) || [
+  require('webpack-node-externals')({
+    modulesDir: path.resolve(__dirname, '../../node_modules'),
+  }),
+]
+
+testJS.include = [APP_PATH, path.resolve(__dirname, 'server_src')]
 
 module.exports = {
-  name: 'SSR-PROD',
+  name: 'ssr-prod',
   devtool: 'source-map',
   entry: [require.resolve('./server_src/server.js')],
   target: 'node',
@@ -16,20 +25,15 @@ module.exports = {
     libraryTarget: 'commonjs2',
   },
 
-  externals: [
-    // nodeExternals({
-    //   modulesDir: path.resolve(__dirname, '../../node_modules'),
-    //   whitelist: [],
-    // }),
-  ],
+  externals,
 
   resolve: {
     extensions: ['.js', '.jsx'],
     modules: [
       path.resolve(__dirname, 'server_src'),
-      'node_modules', // app modules
-      APP_SOURCE_DIR,
-      path.resolve(__dirname, '../../node_modules'), // server node modules
+      'node_modules',
+      APP_PATH,
+      path.resolve(__dirname, '../../node_modules'),
     ],
   },
 
@@ -37,38 +41,21 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
+    // new webpack.optimize.UglifyJsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development'),
         BABEL_ENV: JSON.stringify('development'),
-        NODE_PATH: JSON.stringify('./src'),
         BUILD_TARGET: JSON.stringify('node'),
       },
     }),
   ],
   module: {
     rules: [
-      {
-        test: /\.jsx?$/,
-        include: [path.resolve(__dirname, 'server_src'), APP_SOURCE_DIR],
-        exclude: /node_modules/,
-        use: {
-          loader: require.resolve('babel-loader'),
-          options: {
-            presets: [
-              [require.resolve('@babel/preset-env'), { modules: false }],
-              require.resolve('@babel/preset-react'),
-              require.resolve('@babel/preset-flow'),
-              require.resolve('@babel/preset-stage-2'),
-            ],
-            plugins: [require.resolve('react-hot-loader/babel')],
-          },
-        },
-      },
+      testJS,
       {
         test: /\.scss$/,
-        include: [APP_SOURCE_DIR],
+        include: [APP_PATH],
         exclude: /node_modules/,
         use: {
           loader: require.resolve('ignore-loader'),

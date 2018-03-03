@@ -4,18 +4,16 @@ const paths = require('../config/paths')
 const chalk = require('chalk')
 
 const appConfig = (process.env.appConfig = {
-  sourceDir: process.env.APP_SOURCE_DIR || paths.resolveApp(''),
+  sourceDir: process.env.APP_PATH || paths.resolveApp(''),
   entry: process.env.APP_ENTRY || 'index',
 })
 
 const makeAbsolute = p => (path.isAbsolute(p) ? p : paths.resolveApp(p))
 
-let sourceDir = makeAbsolute(
-  argv['source-dir'] || process.env.APP_SOURCE_DIR || appConfig.sourceDir
-)
+let sourceDir = makeAbsolute(argv['path'] || process.env.APP_PATH || appConfig.sourceDir)
 let entry = argv['entry'] || appConfig.entry || 'index'
 
-process.env.APP_SOURCE_DIR = appConfig.sourceDir = sourceDir
+process.env.APP_PATH = appConfig.sourceDir = sourceDir
 process.env.APP_ENTRY = appConfig.entry = entry
 
 try {

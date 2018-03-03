@@ -1,12 +1,12 @@
 var path = require('path')
-var paths = require('../../config/paths')
+var { resolveOwn, resolveApp } = require('../../config/paths')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-var VERSION = 'v' + require(paths.resolveApp('package.json')).version
+var VERSION = 'v' + require(resolveApp('package.json')).version
 
-const { APP_SOURCE_DIR, APP_ENTRY } = process.env
+const { APP_PATH, APP_ENTRY } = process.env
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
@@ -38,7 +38,6 @@ module.exports = {
         BABEL_ENV: JSON.stringify('development'),
       },
       __IS_DEV__: true,
-      __API_URL__: JSON.stringify('/'),
       __DATE__: JSON.stringify(new Date()),
       __BUILD_VERSION__: JSON.stringify(VERSION),
     }),
@@ -51,9 +50,9 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
-    modules: [APP_SOURCE_DIR, paths.resolveOwn('node_modules')],
+    modules: [APP_PATH, resolveOwn('node_modules')],
   },
   module: {
-    rules: require(paths.resolveOwn('config/webpack.loaders')).rules,
+    rules: require(resolveOwn('config/webpack.loaders')).rules,
   },
 }

@@ -3,7 +3,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 
 const paths = require('../../config/paths')
 const argv = require('minimist')(process.argv)
-const appConfig = require(paths.resolveOwn('util/configure_constants'))
+const appConfig = require(paths.resolveOwn('util/register_options'))
 
 const path = require('path')
 const rimraf = require('rimraf')

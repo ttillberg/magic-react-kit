@@ -7,8 +7,8 @@ const { resolveApp, resolveOwn } = require('../../config/paths')
 const VERSION = require(resolveApp('package.json')).version
 const outputPath = resolveApp('server_dist')
 
-const { APP_SOURCE_DIR, APP_ENTRY } = process.env
-const sourceDirs = [APP_SOURCE_DIR]
+const { APP_PATH, APP_ENTRY } = process.env
+const sourceDirs = [APP_PATH]
 
 module.exports = {
   devtool: 'source-map',
@@ -41,7 +41,7 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
-    modules: [APP_SOURCE_DIR, resolveOwn('node_modules')],
+    modules: [APP_PATH, resolveOwn('node_modules')],
   },
   module: {
     rules: require(resolveOwn('config/webpack.loaders')).rules,

@@ -22,14 +22,14 @@ function start() {
 }
 
 function cleanup() {
-  console.log('Clean up')
+  console.log('clean up')
   return new Promise((resolve, reject) => {
     rimraf(path.resolve(__dirname, 'dist'), resolve)
   })
 }
 
 function build() {
-  console.log('Build dev server')
+  console.log('build dev server')
   var compiler = webpack(config)
   return new Promise((resolve, reject) => {
     compiler.watch(
@@ -43,7 +43,7 @@ function build() {
 }
 
 function start_servers() {
-  console.log('Starting servers...')
+  console.log('starting servers...')
   start_dev_server()
   start_dev_client()
 }

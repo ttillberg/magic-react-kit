@@ -3,7 +3,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 process.env.BUILD_TARGET = 'browser'
 
 const paths = require('../../config/paths')
-const appConfig = require(paths.resolveOwn('util/configure_constants'))
+const appConfig = require(paths.resolveOwn('util/register_options'))
 const WebpackDevServer = require('webpack-dev-server')
 const webpack = require('webpack')
 const webpackConfig = require('./dev_client.webpack.config.js')
@@ -32,6 +32,7 @@ const server = new WebpackDevServer(compiler, {
   hot: true,
 })
 
-server.listen(3001, 'localhost', a => {
-  console.log('🌶  Starting hot client...')
+var listener = server.listen(3001, 'localhost', () => {
+  const host = listener.address()
+  console.log(`🌶  dev-client listening on port ${host.port}`)
 })

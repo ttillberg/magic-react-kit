@@ -1,12 +1,12 @@
 const paths = require('../../config/paths')
-const appConfig = require('../../util/configure_constants')
+const appConfig = require('../../util/register_options')
 const webpack = require('webpack')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 
 var hotScript = paths.resolveOwn('node_modules/webpack/hot/poll') + '?1000'
 
-const { APP_SOURCE_DIR } = process.env
+const { APP_PATH } = process.env
 
 module.exports = {
   name: 'SSR',
@@ -33,7 +33,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
     modules: [
       path.resolve(__dirname, './server_src'), // server modules
-      APP_SOURCE_DIR,
+      APP_PATH,
     ],
   },
 
