@@ -13,7 +13,7 @@ module.exports = {
   entry: [hotScript, require.resolve('./server_src/index_ssr_hmr')],
   watch: true,
   watchOptions: {
-    poll: 1000,
+    aggregateTimeout: 100,
     ignored: /node_modules/,
   },
   target: 'node',

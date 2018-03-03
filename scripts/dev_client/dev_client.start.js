@@ -21,6 +21,10 @@ const server = new WebpackDevServer(compiler, {
     warnings: true,
     errors: true,
   },
+  watchOptions: {
+    aggregateTimeout: 100,
+    ignored: /node_modules/,
+  },
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
