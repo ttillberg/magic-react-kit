@@ -10,6 +10,7 @@ process.on('unhandledRejection', err => {
 const spawn = require('cross-spawn')
 
 var scripts = {
+  client: require.resolve('../scripts/dev_client/dev_client.start'),
   start: require.resolve('../scripts/dev_server/dev_server.start'),
   build: require.resolve('../scripts/prod_server/prod_server.start'),
 }

@@ -46,6 +46,7 @@ module.exports = {
       filename: 'index.html',
       title: '',
       hash: true,
+      template: path.resolve(__dirname, 'template.html'),
     }),
   ],
   resolve: {
