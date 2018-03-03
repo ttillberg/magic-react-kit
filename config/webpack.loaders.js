@@ -19,7 +19,7 @@ const testJS = {
           ? []
           : [
               require.resolve('react-hot-loader/babel'),
-              process.env.BUILD_TARGET !== 'browser'
+              process.env.BUILD_TARGET !== 'browser' || process.env.NODE_ENV !== 'development'
                 ? false
                 : require.resolve('babel-plugin-flow-react-proptypes'),
             ].filter(Boolean),
