@@ -1,9 +1,9 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import App from 'Main'
+import App from 'App'
 import Helmet from 'react-helmet'
 
-export default function render_react_app(req, scriptHref) {
+export default function render(req, scriptHref) {
   const application = renderToString(<App url={req.url} />)
   const helmet = Helmet.renderStatic()
   const title = helmet.title.toString()
@@ -14,7 +14,6 @@ export default function render_react_app(req, scriptHref) {
 <html ${helmet.htmlAttributes.toString()}>
 	<head>
 		${[title, meta, link].join('')}  
-    <link rel="stylesheet" href="/styles.css">
 	</head>
 	<body>
 		<div id="root">${application}</div>

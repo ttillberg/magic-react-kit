@@ -1,5 +1,5 @@
-const { resolveOwn } = require('../../../config/paths')
-const appConfig = require('../../../util/register_options')
+const { resolveApp, resolveOwn } = require('../../../config/paths')
+require(resolveOwn('util/register_options'))
 const webpack = require('webpack')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
@@ -35,6 +35,7 @@ module.exports = {
     modules: [
       path.resolve(__dirname, './server_src'), // server modules
       resolveOwn('node_modules'),
+      resolveApp('node_modules'),
       APP_PATH,
     ],
   },
@@ -48,9 +49,9 @@ module.exports = {
       'process.env': {
         NODE_ENV: JSON.stringify('development'),
         BABEL_ENV: JSON.stringify('development'),
-        NODE_PATH: JSON.stringify('./src'),
         BUILD_TARGET: JSON.stringify('node'),
       },
+      __IS_SERVER__: true,
     }),
   ],
   module: {

@@ -5,13 +5,13 @@ const chalk = require('chalk')
 
 const appConfig = (process.env.appConfig = {
   sourceDir: process.env.APP_PATH || paths.resolveApp(''),
-  entry: process.env.APP_ENTRY || 'index',
+  entry: process.env.APP_ENTRY || 'App',
 })
 
 const makeAbsolute = p => (path.isAbsolute(p) ? p : paths.resolveApp(p))
 
 let sourceDir = makeAbsolute(argv['path'] || process.env.APP_PATH || appConfig.sourceDir)
-let entry = argv['entry'] || appConfig.entry || 'index'
+let entry = argv['entry'] || appConfig.entry || 'App'
 
 process.env.APP_PATH = appConfig.sourceDir = sourceDir
 process.env.APP_ENTRY = appConfig.entry = entry
@@ -20,7 +20,13 @@ try {
   require.resolve(entry, { paths: [sourceDir] })
 } catch (e) {
   console.log(e)
-  console.log(chalk.red(`Cannot resolve entry "${path.join(sourceDir, entry)}"`))
+  console.log(
+    chalk.red(`
+  Cannot resolve entry "${path.join(sourceDir, entry)}"
+  Make sure the file exists inside the provided --path and has a valid extension
+`)
+  )
+
   process.exit(1)
 }
 

@@ -5,7 +5,8 @@ import express from 'express'
 import React from 'react'
 import Helmet from 'react-helmet'
 import { renderToString } from 'react-dom/server'
-import App from 'main'
+import render from '../../../common/server_entry/render_react_app'
+import App from 'App'
 
 var appDirectory = fs.realpathSync(process.cwd())
 
@@ -24,24 +25,4 @@ function startServer() {
   server.listen(3000, () => {
     console.log('\n\n📡   127.0.0.1:3000\n\n')
   })
-}
-
-function render(req) {
-  const application = renderToString(<App url={req.url} />)
-  const helmet = Helmet.renderStatic()
-  const title = helmet.title.toString()
-  const meta = helmet.meta.toString()
-  const link = helmet.link.toString()
-
-  return `<!doctype html>
-<html ${helmet.htmlAttributes.toString()}>
-	<head>
-		${[title, meta, link].join('')}  
-    <link rel="stylesheet" href="/styles.css">
-	</head>
-	<body>
-		<div id="root">${application}</div>
-		<script src="/client.js"></script>
-	</body>
-</html>`
 }

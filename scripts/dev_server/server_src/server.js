@@ -1,5 +1,5 @@
 import express from 'express'
-import render from './render_react_app'
+import render from '../../common/server_entry/render_react_app'
 
 const app = express()
 

@@ -17,7 +17,7 @@ module.exports = {
     // only- means to only hot reload for successful updates
     require.resolve('webpack/hot/only-dev-server'),
 
-    APP_ENTRY,
+    resolveOwn('scripts/common/client_entry/index_client.js'),
   ],
 
   output: {
@@ -35,6 +35,7 @@ module.exports = {
         NODE_ENV: JSON.stringify('development'),
         BABEL_ENV: JSON.stringify('development'),
       },
+      __IS_SERVER__: false,
       __IS_DEV__: true,
       __DATE__: JSON.stringify(new Date()),
       __BUILD_VERSION__: JSON.stringify(VERSION),
@@ -42,7 +43,7 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
-    modules: [APP_PATH, resolveOwn('node_modules')],
+    modules: [APP_PATH, resolveApp('node_modules'), resolveOwn('node_modules')],
   },
   module: {
     rules: require(resolveOwn('config/webpack.loaders')).rules,

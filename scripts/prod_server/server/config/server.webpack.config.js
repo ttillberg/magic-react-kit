@@ -12,8 +12,6 @@ const externals = (APP_COMPILE_SERVER_NODE_MODULES && []) || [
   }),
 ]
 
-testJS.include = [APP_PATH, path.resolve(__dirname, '../server_src')]
-
 module.exports = {
   name: 'ssr-prod',
   devtool: 'source-map',
@@ -30,10 +28,10 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     modules: [
-      path.resolve(__dirname, 'server_src'),
-      'node_modules',
-      APP_PATH,
+      path.resolve(resolveApp('node_modules')),
       path.resolve(resolveOwn('node_modules')),
+      APP_PATH,
+      path.resolve(__dirname, 'server_src'),
     ],
   },
 
@@ -48,11 +46,19 @@ module.exports = {
         BABEL_ENV: JSON.stringify('development'),
         BUILD_TARGET: JSON.stringify('node'),
       },
+      __IS_SERVER__: true,
     }),
   ],
   module: {
     rules: [
-      testJS,
+      {
+        ...testJS,
+        include: [
+          APP_PATH,
+          path.resolve(__dirname, '../server_src'),
+          resolveOwn('scripts/common/server_entry'),
+        ],
+      },
       {
         test: /\.scss$/,
         include: [APP_PATH],
