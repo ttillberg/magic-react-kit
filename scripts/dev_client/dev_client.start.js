@@ -2,8 +2,8 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 process.env.BUILD_TARGET = 'browser'
 
-const { resolveOwn } = require('../../config/paths')
-const appConfig = require(resolveOwn('util/register_options'))
+const { resolveOwn, resolveCommon } = require('../common/paths')
+const appConfig = require(resolveCommon('register_options'))
 const WebpackDevServer = require('webpack-dev-server')
 const webpack = require('webpack')
 const webpackConfig = require('./config/webpack.config.js')

@@ -1,5 +1,5 @@
-const { resolveApp, resolveOwn } = require('../../../config/paths')
-require(resolveOwn('util/register_options'))
+const { resolveApp, resolveOwn, resolveCommon } = require('../../common/paths')
+require(resolveCommon('register_options'))
 const webpack = require('webpack')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
@@ -56,7 +56,7 @@ module.exports = {
   ],
   module: {
     rules: [
-      require(resolveOwn('config/webpack.loaders')).testJS,
+      require(resolveCommon('webpack.loaders')).testJS,
       {
         test: /\.(scss|jpg|png|svgz)$/,
         use: {

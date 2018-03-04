@@ -1,4 +1,4 @@
-const { resolveApp, resolveOwn } = require('../../../../config/paths')
+const { resolveApp, resolveOwn, resolveCommon } = require('../../../common/paths')
 const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -11,7 +11,7 @@ const sourceDirs = [APP_PATH]
 
 module.exports = {
   devtool: 'source-map',
-  entry: [resolveOwn('scripts/common/client_entry/index_client')],
+  entry: [resolveCommon('client_entry/index_client')],
   output: {
     path: outputPath,
     filename: path.join('assets', 'client.js'),
@@ -41,13 +41,9 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
-    modules: [
-      APP_PATH,
-      resolveApp('node_modules'),
-      resolveOwn('scripts/common/client_entry/index_client'),
-    ],
+    modules: [APP_PATH, resolveApp('node_modules'), resolveCommon('client_entry/index_client')],
   },
   module: {
-    rules: require(resolveOwn('config/webpack.loaders')).rules,
+    rules: require(resolveCommon('webpack.loaders')).rules,
   },
 }

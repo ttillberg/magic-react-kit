@@ -2,13 +2,13 @@
 process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 process.env.BUILD_TARGET = 'node'
 
-const paths = require('../../config/paths')
+const { resolveApp, resolveOwn, resolveCommon } = require('../common/paths')
 const webpack = require('webpack')
 const rimraf = require('rimraf')
 const path = require('path')
 const spawn = require('cross-spawn')
 
-const create_webpack_result_handler = require(paths.resolveOwn('util/webpack_output_handler'))
+const create_webpack_result_handler = require(resolveOwn('scripts/common/webpack_output_handler'))
 const config = require('./config/dev_server.webpack.config')
 
 const DEBUG = process.env.DEBUG
@@ -49,14 +49,14 @@ function start_servers() {
 }
 
 function start_dev_server() {
-  const script = paths.resolveOwn('scripts/dev_server/server_dist/dev_server_compiled.js')
+  const script = resolveOwn('scripts/dev_server/server_dist/dev_server_compiled.js')
   spawn('node', [script], {
     stdio: 'inherit',
   })
 }
 
 function start_dev_client() {
-  const script = paths.resolveOwn('scripts/dev_client/dev_client.start')
+  const script = resolveOwn('scripts/dev_client/dev_client.start')
   spawn('node', [script], {
     stdio: 'inherit',
   })

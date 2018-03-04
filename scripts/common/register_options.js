@@ -1,6 +1,6 @@
 const path = require('path')
 const argv = require('minimist')(process.argv)
-const paths = require('../config/paths')
+const paths = require('./paths')
 const chalk = require('chalk')
 
 const appConfig = (process.env.appConfig = {

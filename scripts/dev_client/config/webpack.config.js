@@ -1,5 +1,5 @@
 var path = require('path')
-var { resolveOwn, resolveApp } = require('../../../config/paths')
+var { resolveOwn, resolveApp, resolveCommon } = require('../../common/paths')
 var webpack = require('webpack')
 
 var VERSION = 'v' + require(resolveApp('package.json')).version
@@ -17,7 +17,7 @@ module.exports = {
     // only- means to only hot reload for successful updates
     require.resolve('webpack/hot/only-dev-server'),
 
-    resolveOwn('scripts/common/client_entry/index_client.js'),
+    resolveCommon('client_entry/index_client.js'),
   ],
 
   output: {
@@ -46,6 +46,6 @@ module.exports = {
     modules: [APP_PATH, resolveApp('node_modules'), resolveOwn('node_modules')],
   },
   module: {
-    rules: require(resolveOwn('config/webpack.loaders')).rules,
+    rules: require(resolveCommon('webpack.loaders')).rules,
   },
 }

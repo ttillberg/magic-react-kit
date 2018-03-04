@@ -1,7 +1,7 @@
-const { resolveApp, resolveOwn } = require('../../../../config/paths')
+const { resolveApp, resolveOwn, resolveCommon } = require('../../../common/paths')
 const path = require('path')
 const webpack = require('webpack')
-const { testJS } = require(resolveOwn('config/webpack.loaders'))
+const { testJS } = require(resolveCommon('webpack.loaders'))
 
 const { APP_PATH, APP_ENTRY } = process.env
 const APP_COMPILE_SERVER_NODE_MODULES = true
@@ -56,7 +56,7 @@ module.exports = {
         include: [
           APP_PATH,
           path.resolve(__dirname, '../server_src'),
-          resolveOwn('scripts/common/server_entry'),
+          resolveCommon('server_entry'),
         ],
       },
       {
