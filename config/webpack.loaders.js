@@ -27,16 +27,19 @@ const testJS = {
   },
 }
 let scssLoader = [
-  process.env.NODE_ENV === 'development' ? 'style-loader' : false,
-  'css-loader',
+  process.env.NODE_ENV === 'development'
+    ? { loader: 'style-loader', options: { sourceMap: true } }
+    : false,
+  { loader: 'css-loader', options: { sourceMap: true } },
   {
     loader: 'postcss-loader',
     options: {
-      plugins: [autoprefixer],
       allChunks: true,
+      plugins: [autoprefixer],
+      sourceMap: true,
     },
   },
-  'sass-loader',
+  { loader: 'sass-loader', options: { sourceMap: true } },
 ].filter(Boolean)
 
 const testSCSS = {

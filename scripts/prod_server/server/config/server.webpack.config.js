@@ -1,23 +1,23 @@
+const { resolveApp, resolveOwn } = require('../../../../config/paths')
 const path = require('path')
 const webpack = require('webpack')
-const { testJS } = require('../../config/webpack.loaders')
-const { resolveApp, resolveOwn } = require('../../config/paths')
+const { testJS } = require(resolveOwn('config/webpack.loaders'))
 
 const { APP_PATH, APP_ENTRY } = process.env
 const APP_COMPILE_SERVER_NODE_MODULES = true
 
 const externals = (APP_COMPILE_SERVER_NODE_MODULES && []) || [
   require('webpack-node-externals')({
-    modulesDir: path.resolve(__dirname, '../../node_modules'),
+    modulesDir: resolveOwn('node_modules'),
   }),
 ]
 
-testJS.include = [APP_PATH, path.resolve(__dirname, 'server_src')]
+testJS.include = [APP_PATH, path.resolve(__dirname, '../server_src')]
 
 module.exports = {
   name: 'ssr-prod',
   devtool: 'source-map',
-  entry: [require.resolve('./server_src/server.js')],
+  entry: [require.resolve('../server_src/server.js')],
   target: 'node',
   output: {
     path: resolveApp('server_dist'),
@@ -33,7 +33,7 @@ module.exports = {
       path.resolve(__dirname, 'server_src'),
       'node_modules',
       APP_PATH,
-      path.resolve(__dirname, '../../node_modules'),
+      path.resolve(resolveOwn('node_modules')),
     ],
   },
 

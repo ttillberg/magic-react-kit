@@ -1,30 +1,31 @@
-const paths = require('../../config/paths')
-const appConfig = require('../../util/register_options')
+const { resolveOwn } = require('../../../config/paths')
+const appConfig = require('../../../util/register_options')
 const webpack = require('webpack')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 
-var hotScript = paths.resolveOwn('node_modules/webpack/hot/poll') + '?1000'
+var hotScript = 'webpack/hot/poll' + '?1000'
 
 const { APP_PATH } = process.env
 
 module.exports = {
   name: 'SSR',
-  entry: [hotScript, require.resolve('./server_src/index_ssr_hmr')],
-  watch: true,
-  watchOptions: {
-    aggregateTimeout: 100,
-    ignored: /node_modules/,
-  },
+  entry: [hotScript, path.resolve(__dirname, '../server_src/index')],
+  // watch: true,
+  // watchOptions: {
+  //   aggregateTimeout: 100,
+  //   ignored: /node_modules/,
+  // },
   target: 'node',
+
   output: {
-    path: path.resolve(__dirname, './server_dist'),
+    path: path.resolve(__dirname, '../server_dist'),
     filename: 'dev_server_compiled.js',
     libraryTarget: 'commonjs2',
   },
   externals: [
     nodeExternals({
-      modulesDir: path.resolve(__dirname, '../../node_modules'),
+      modulesDir: resolveOwn('node_modules'),
       whitelist: [hotScript],
     }),
   ],
@@ -33,6 +34,7 @@ module.exports = {
     extensions: ['.js', '.jsx'],
     modules: [
       path.resolve(__dirname, './server_src'), // server modules
+      resolveOwn('node_modules'),
       APP_PATH,
     ],
   },
@@ -53,7 +55,7 @@ module.exports = {
   ],
   module: {
     rules: [
-      require(paths.resolveOwn('config/webpack.loaders')).testJS,
+      require(resolveOwn('config/webpack.loaders')).testJS,
       {
         test: /\.(scss|jpg|png|svgz)$/,
         use: {

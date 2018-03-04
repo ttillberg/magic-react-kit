@@ -14,7 +14,6 @@ export default function render(req, scriptHref) {
 <html ${helmet.htmlAttributes.toString()}>
 	<head>
 		${[title, meta, link].join('')}  
-    <link rel="stylesheet" href="/styles.css">
 	</head>
 	<body>
 		<div id="root">${application}</div>

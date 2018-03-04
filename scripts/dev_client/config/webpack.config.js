@@ -1,8 +1,6 @@
 var path = require('path')
-var { resolveOwn, resolveApp } = require('../../config/paths')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+var { resolveOwn, resolveApp } = require('../../../config/paths')
 var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 var VERSION = 'v' + require(resolveApp('package.json')).version
 
@@ -40,12 +38,6 @@ module.exports = {
       __IS_DEV__: true,
       __DATE__: JSON.stringify(new Date()),
       __BUILD_VERSION__: JSON.stringify(VERSION),
-    }),
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      title: '',
-      hash: true,
-      template: path.resolve(__dirname, 'template.html'),
     }),
   ],
   resolve: {

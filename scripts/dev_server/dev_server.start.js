@@ -9,7 +9,7 @@ const path = require('path')
 const spawn = require('cross-spawn')
 
 const create_webpack_result_handler = require(paths.resolveOwn('util/webpack_output_handler'))
-const config = require('./dev_server.webpack.config')
+const config = require('./config/dev_server.webpack.config')
 
 const DEBUG = process.env.DEBUG
 
@@ -24,7 +24,7 @@ function start() {
 function cleanup() {
   console.log('clean up')
   return new Promise((resolve, reject) => {
-    rimraf(path.resolve(__dirname, 'dist'), resolve)
+    rimraf(path.resolve(__dirname, 'server_dist'), resolve)
   })
 }
 
@@ -34,8 +34,8 @@ function build() {
   return new Promise((resolve, reject) => {
     compiler.watch(
       {
-        poll: 1000,
-        ignored: 'node_modules',
+        // poll: 1000,
+        ignored: /node_modules/,
       },
       create_webpack_result_handler(resolve, reject)
     )

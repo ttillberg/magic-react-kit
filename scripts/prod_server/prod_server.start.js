@@ -8,8 +8,8 @@ const appConfig = require(paths.resolveOwn('util/register_options'))
 const path = require('path')
 const rimraf = require('rimraf')
 const spawn = require('cross-spawn')
-const buildClient = require('./client.build')
-const buildServer = require('./server.build')
+const buildClient = require('./client/client.build')
+const buildServer = require('./server/server.build')
 
 console.log('Clean up')
 

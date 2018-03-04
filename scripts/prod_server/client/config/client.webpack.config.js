@@ -1,9 +1,8 @@
+const { resolveApp, resolveOwn } = require('../../../../config/paths')
 const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const autoprefixer = require('autoprefixer')
-const { resolveApp, resolveOwn } = require('../../config/paths')
-
 const VERSION = require(resolveApp('package.json')).version
 const outputPath = resolveApp('server_dist')
 
