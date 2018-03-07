@@ -28,18 +28,18 @@ const testJS = {
 }
 let scssLoader = [
   process.env.NODE_ENV === 'development'
-    ? { loader: 'style-loader', options: { sourceMap: true } }
+    ? { loader: require.resolve('css-loader'), options: { sourceMap: true } }
     : false,
-  { loader: 'css-loader', options: { sourceMap: true } },
+  { loader: require.resolve('css-loader'), options: { sourceMap: true } },
   {
-    loader: 'postcss-loader',
+    loader: require.resolve('postcss-loader'),
     options: {
       allChunks: true,
       plugins: [autoprefixer],
       sourceMap: true,
     },
   },
-  { loader: 'sass-loader', options: { sourceMap: true } },
+  { loader: require.resolve('sass-loader'), options: { sourceMap: true } },
 ].filter(Boolean)
 
 const testSCSS = {
