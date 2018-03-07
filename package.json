@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "bin": {
-    "magic": "./bin/magic-react-kit.js"
+    "magic-react-kit": "./bin/magic-react-kit.js"
   },
   "author": "",
   "license": "ISC",
