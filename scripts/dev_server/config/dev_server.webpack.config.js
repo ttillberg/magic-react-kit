@@ -11,11 +11,6 @@ const { APP_PATH } = process.env
 module.exports = {
   name: 'SSR',
   entry: [hotScript, path.resolve(__dirname, '../server_src/index')],
-  // watch: true,
-  // watchOptions: {
-  //   aggregateTimeout: 100,
-  //   ignored: /node_modules/,
-  // },
   target: 'node',
 
   output: {

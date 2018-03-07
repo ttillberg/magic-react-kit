@@ -8,7 +8,7 @@ const rimraf = require('rimraf')
 const path = require('path')
 const spawn = require('cross-spawn')
 
-const create_webpack_result_handler = require(resolveOwn('scripts/common/webpack_output_handler'))
+const create_webpack_result_handler = require(resolveCommon('webpack_output_handler'))
 const config = require('./config/dev_server.webpack.config')
 
 const DEBUG = process.env.DEBUG
@@ -34,7 +34,6 @@ function build() {
   return new Promise((resolve, reject) => {
     compiler.watch(
       {
-        // poll: 1000,
         ignored: /node_modules/,
       },
       create_webpack_result_handler(resolve, reject)
@@ -49,6 +48,7 @@ function start_servers() {
 }
 
 function start_dev_server() {
+  console.log('starting dev server')
   const script = resolveOwn('scripts/dev_server/server_dist/dev_server_compiled.js')
   spawn('node', [script], {
     stdio: 'inherit',

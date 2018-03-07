@@ -3,8 +3,8 @@ import { renderToString } from 'react-dom/server'
 import App from 'App'
 import Helmet from 'react-helmet'
 
-export default function render(req, scriptHref) {
-  const application = renderToString(<App url={req.url} />)
+export default function render(req, scriptHref, cb, state) {
+  const application = renderToString(<App url={req.url} onReady={cb} prefetchedState={state} />)
   const helmet = Helmet.renderStatic()
   const title = helmet.title.toString()
   const meta = helmet.meta.toString()

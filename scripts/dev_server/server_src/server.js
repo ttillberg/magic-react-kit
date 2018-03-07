@@ -3,9 +3,14 @@ import render from '../../common/server_entry/render_react_app'
 
 const app = express()
 
-app.get('*', (req, res) => {
-  let html = render(req, 'http://localhost:3001/bundle.js')
-  res.send(html)
+const matchOnlyPageUrls = /.*(\/|\/[a-z0-9_-]+)$/
+
+app.get(matchOnlyPageUrls, (req, res) => {
+  let html = render(req, '/bundle.js', state => {
+    const htmlWithState = render(req, '/bundle.js', false, state)
+    res.setHeader('Cache-Control', 'public, max-age=60') // 1min for testing
+    res.send(htmlWithState)
+  })
 })
 
 export default app

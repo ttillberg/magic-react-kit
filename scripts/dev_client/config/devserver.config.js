@@ -3,6 +3,8 @@ const webpackConfig = require('./webpack.config.js')
 module.exports = {
   publicPath: webpackConfig.output.publicPath,
   inline: true,
+  noInfo: false,
+  hot: true,
   disableHostCheck: true,
   historyApiFallback: {
     // rewrites: [{ from: /   .*/, to: 'src/index.html' }],
@@ -18,6 +20,4 @@ module.exports = {
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
-  noInfo: true,
-  hot: true,
 }
