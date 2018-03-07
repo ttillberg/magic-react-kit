@@ -41,7 +41,12 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
-    modules: [APP_PATH, resolveApp('node_modules'), resolveCommon('client_entry/index_client')],
+    modules: [
+      APP_PATH,
+      'node_modules',
+      resolveApp('node_modules'),
+      resolveCommon('client_entry/index_client'),
+    ],
   },
   module: {
     rules: require(resolveCommon('webpack.loaders')).rules,

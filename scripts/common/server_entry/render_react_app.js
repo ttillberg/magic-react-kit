@@ -25,6 +25,7 @@ export default function render(req, scriptHref, cb, state) {
 	</head>
 	<body>
 		<div id="root">${application}</div>
+    ${(state && `<script>window.__PREFETCHED_STATE__=${JSON.stringify(state)}</script>`) || ''}
 		<script src="${scriptHref}"></script>
 	</body>
 </html>`

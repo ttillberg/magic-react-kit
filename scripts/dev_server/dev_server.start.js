@@ -19,6 +19,9 @@ function start() {
   cleanup()
     .then(build)
     .then(start_servers)
+    .then(() => {
+      console.log('\n\nReady')
+    })
 }
 
 function cleanup() {
@@ -50,14 +53,23 @@ function start_servers() {
 function start_dev_server() {
   console.log('starting dev server')
   const script = resolveOwn('scripts/dev_server/server_dist/dev_server_compiled.js')
-  spawn('node', [script], {
-    stdio: 'inherit',
-  })
+  return spawnPromise(script)
 }
 
 function start_dev_client() {
+  console.log('starting dev client')
   const script = resolveOwn('scripts/dev_client/dev_client.start')
-  spawn('node', [script], {
-    stdio: 'inherit',
+  return spawnPromise(script)
+}
+
+function spawnPromise(script) {
+  return new Promise((success, fail) => {
+    spawn('node', [script], {
+      stdio: 'inherit',
+      // ['pipe', 'inherit', 'pipe', 'ipc'],
+    })
+    // .on('message', function(data) {
+    // .on('error', function(e) {
+    // .on('exit', function(e) {
   })
 }

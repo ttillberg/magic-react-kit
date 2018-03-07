@@ -7,6 +7,11 @@ let currentApp = app
 var listener = server.listen(3000, () => {
   const host = listener.address()
   console.log(`🌶  dev-server listening on port ${host.port}`)
+  // if the client runs as a child process (e.g dev server) we'd like to
+  // notify the parent process that the compilation went well.
+  if (process.send) {
+    process.send('process_ready')
+  }
 })
 
 if (module.hot) {

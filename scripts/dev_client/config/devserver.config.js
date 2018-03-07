@@ -1,14 +1,16 @@
 const webpackConfig = require('./webpack.config.js')
 
+var IP = '0.0.0.0'
+
 module.exports = {
   publicPath: webpackConfig.output.publicPath,
   inline: true,
   noInfo: false,
   hot: true,
   disableHostCheck: true,
-  historyApiFallback: {
-    // rewrites: [{ from: /   .*/, to: 'src/index.html' }],
-  },
+  historyApiFallback: true,
+  host: IP,
+  port: 8888,
   overlay: {
     warnings: true,
     errors: true,

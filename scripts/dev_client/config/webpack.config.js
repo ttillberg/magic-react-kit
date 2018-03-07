@@ -6,12 +6,14 @@ var VERSION = 'v' + require(resolveApp('package.json')).version
 
 const { APP_PATH, APP_ENTRY } = process.env
 
+var IP = '0.0.0.0'
+
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
     // bundle the client for webpack-dev-server
     // and connect to the provided endpoint
-    require.resolve('webpack-dev-server/client') + '?http://0.0.0.0:3001',
+    require.resolve('webpack-dev-server/client') + '?http://' + IP + ':8888',
 
     // bundle the client for hot reloading
     // only- means to only hot reload for successful updates
@@ -22,8 +24,8 @@ module.exports = {
 
   output: {
     filename: 'bundle.js',
-    // required to serve hot from :3001
-    publicPath: '//0.0.0.0:3001/',
+    // required to serve hot from :8888
+    publicPath: 'http://' + IP + ':8888',
   },
 
   plugins: [
