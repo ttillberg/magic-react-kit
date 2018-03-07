@@ -1,7 +1,15 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import App from 'App'
 import Helmet from 'react-helmet'
+
+try {
+  var App = require('App').default
+} catch (e) {
+  console.log(
+    "Couldn't locate main App entry point, make sure the --path points to the source folder"
+  )
+  process.error(1)
+}
 
 export default function render(req, scriptHref, cb, state) {
   const application = renderToString(<App url={req.url} onReady={cb} prefetchedState={state} />)
