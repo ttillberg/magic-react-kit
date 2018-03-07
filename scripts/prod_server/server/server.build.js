@@ -1,4 +1,6 @@
 process.env.BUILD_TARGET = 'node'
+process.env.BABEL_ENV = 'production'
+process.env.NODE_ENV = 'production'
 
 const webpack = require('webpack')
 const { resolveCommon } = require('../../common/paths')
