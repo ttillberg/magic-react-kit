@@ -1,7 +1,7 @@
 /*@flow*/
 import React from 'react'
 import { hydrate } from 'react-dom'
-import App from 'App'
+import App from '../hot_entry/HotApp'
 
 const root = document.getElementById('root')
 
