@@ -6,7 +6,7 @@ import App from 'App'
 const root = document.getElementById('root')
 
 console.log(
-  `%cProject Name%c
+  `%c${__PROJECT_NAME__}%c
 
 ${__BUILD_VERSION__} - ${__IS_DEV__ ? 'Dev' : 'Prod'}\r
 ${new Date(__DATE__)}\r\n\r\n`,

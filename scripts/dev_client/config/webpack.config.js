@@ -2,7 +2,9 @@ var path = require('path')
 var { resolveOwn, resolveApp, resolveCommon } = require('../../common/paths')
 var webpack = require('webpack')
 
-var VERSION = 'v' + require(resolveApp('package.json')).version
+var packageData = require(resolveApp('package.json'))
+var VERSION = 'v' + packageData.version
+var PROJECT_NAME = packageData.name
 
 const { APP_PATH, APP_ENTRY } = process.env
 
@@ -40,6 +42,7 @@ module.exports = {
       __IS_SERVER__: false,
       __IS_DEV__: true,
       __DATE__: JSON.stringify(new Date()),
+      __PROJECT_NAME__: JSON.stringify(PROJECT_NAME),
       __BUILD_VERSION__: JSON.stringify(VERSION),
     }),
   ],

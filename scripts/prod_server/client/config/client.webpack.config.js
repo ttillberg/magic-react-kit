@@ -3,8 +3,11 @@ const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const autoprefixer = require('autoprefixer')
-const VERSION = require(resolveApp('package.json')).version
 const outputPath = resolveApp('server_dist')
+const packageData = require(resolveApp('package.json'))
+
+const VERSION = packageData.version
+const PROJECT_NAME = packageData.name
 
 const { APP_PATH, APP_ENTRY } = process.env
 const sourceDirs = [APP_PATH]
@@ -26,6 +29,7 @@ module.exports = {
       __IS_SERVER__: false,
       __DATE__: JSON.stringify(new Date()),
       __BUILD_VERSION__: JSON.stringify(VERSION),
+      __PROJECT_NAME__: JSON.stringify(PROJECT_NAME),
       __API_URL__: JSON.stringify(''),
     }),
     new webpack.optimize.UglifyJsPlugin({
