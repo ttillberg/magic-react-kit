@@ -1,13 +1,13 @@
 {
   "name": "magic-react-kit",
   "version": "1.0.0",
-  "description": "",
+  "description": "wip",
   "bin": {
     "magic-react-kit": "./bin/magic-react-kit.js"
   },
   "author": "",
   "license": "ISC",
-  "files": ["config", "scripts"],
+  "files": ["bin", "config", "scripts"],
   "dependencies": {
     "express": "^4.16.2"
   },
