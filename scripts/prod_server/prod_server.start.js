@@ -7,20 +7,40 @@ const appConfig = require(paths.resolveCommon('register_options'))
 
 const path = require('path')
 const rimraf = require('rimraf')
+const fs = require('fs-extra')
+
 const spawn = require('cross-spawn')
 const buildClient = require('./client/client.build')
 const buildServer = require('./server/server.build')
+const cleanUp = () =>
+  new Promise((success, error) => {
+    rimraf(paths.resolveApp('server_dist'), (res, err) => {
+      if (err) {
+        error(err)
+      } else {
+        success(res)
+      }
+    })
+  })
 
-console.log('Clean up')
-
-rimraf.sync(paths.resolveApp('server_dist'))
-
-buildClient()
+new Promise(next => next())
+  .then(log('clean up'))
+  .then(cleanUp)
+  .then(log('build client'))
+  .then(buildClient)
+  .then(log('build ssr'))
   .then(buildServer)
+  .then(log('copy server code'))
+  .then(() =>
+    fs.copy(
+      path.join(__dirname, 'server/server_src/server.js'),
+      paths.resolveApp('server_dist/server.js')
+    )
+  )
+  .then(log('ready ✔︎'))
   .then(() => {
-    console.log('Server compiled')
     if (argv.start) {
-      return spawn('node', ['./server_compiled'], {
+      return spawn('node', ['./server.js'], {
         stdio: 'inherit',
         cwd: paths.resolveApp('server_dist'),
       })
@@ -29,3 +49,11 @@ buildClient()
   .catch(err => {
     console.log(err)
   })
+
+function log(message) {
+  return () =>
+    new Promise(next => {
+      console.log(message)
+      next()
+    })
+}

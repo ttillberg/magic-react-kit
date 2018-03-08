@@ -8,22 +8,18 @@ var VERSION = 'v' + packageData.version
 var PROJECT_NAME = packageData.name
 
 const { APP_PATH, APP_ENTRY } = process.env
-const APP_COMPILE_SERVER_NODE_MODULES = true
 
-const externals = (APP_COMPILE_SERVER_NODE_MODULES && []) || [
-  require('webpack-node-externals')({
-    modulesDir: resolveOwn('node_modules'),
-  }),
-]
+const APP_STRIP_NODE_MODULES = true
+const externals = APP_STRIP_NODE_MODULES ? [require('webpack-node-externals')()] : []
 
 module.exports = {
   name: 'ssr-prod',
   devtool: 'source-map',
-  entry: [require.resolve('../server_src/server.js')],
+  entry: [require.resolve('../server_src/app_renderer.js')],
   target: 'node',
   output: {
     path: resolveApp('server_dist'),
-    filename: 'server_compiled.js',
+    filename: 'app_renderer.js',
     libraryTarget: 'commonjs2',
   },
 
@@ -41,9 +37,7 @@ module.exports = {
 
   plugins: [
     new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    // new webpack.optimize.UglifyJsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development'),

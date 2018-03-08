@@ -8,7 +8,6 @@ const create_webpack_result_handler = require(paths.resolveOwn(
 const webpackConfig = require('./config/client.webpack.config')
 
 module.exports = function build() {
-  console.log('Compile client and assets')
   return new Promise((resolve, reject) => {
     var compiler = webpack(webpackConfig, create_webpack_result_handler(resolve, reject))
   })

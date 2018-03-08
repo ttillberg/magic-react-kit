@@ -17,7 +17,7 @@ module.exports = {
   entry: [resolveCommon('client_entry/index_client')],
   output: {
     path: outputPath,
-    filename: path.join('assets', 'client.js'),
+    filename: path.join('static', 'client.js'),
     publicPath: '/',
   },
   plugins: [
@@ -39,7 +39,7 @@ module.exports = {
       },
     }),
     new ExtractTextPlugin({
-      filename: 'assets/styles.css',
+      filename: 'static/styles.css',
       allChunks: true,
     }),
   ],
