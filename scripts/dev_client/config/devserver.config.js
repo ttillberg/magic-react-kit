@@ -9,8 +9,6 @@ module.exports = {
   hot: true,
   disableHostCheck: true,
   historyApiFallback: true,
-  host: IP,
-  port: 8888,
   overlay: {
     warnings: true,
     errors: true,

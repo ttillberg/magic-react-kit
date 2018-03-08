@@ -27,7 +27,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     // required to serve hot from :8888
-    publicPath: 'http://' + IP + ':8888',
+    publicPath: 'http://' + IP + ':8888/',
   },
 
   plugins: [

@@ -6,8 +6,8 @@ const app = express()
 const matchOnlyPageUrls = /.*(\/|\/[a-z0-9_-]+)$/
 
 app.get(matchOnlyPageUrls, (req, res) => {
-  let html = render(req, '/bundle.js', state => {
-    const htmlWithState = render(req, '/bundle.js', false, state)
+  let html = render(req, null, state => {
+    const htmlWithState = render(req, 'http://0.0.0.0:8888/bundle.js', false, state)
     res.setHeader('Cache-Control', 'public, max-age=60') // 1min for testing
     res.send(htmlWithState)
   })
