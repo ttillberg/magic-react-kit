@@ -3,6 +3,10 @@ const path = require('path')
 const webpack = require('webpack')
 const { testJS } = require(resolveCommon('webpack.loaders'))
 
+var packageData = require(resolveApp('package.json'))
+var VERSION = 'v' + packageData.version
+var PROJECT_NAME = packageData.name
+
 const { APP_PATH, APP_ENTRY } = process.env
 const APP_COMPILE_SERVER_NODE_MODULES = true
 
@@ -47,6 +51,10 @@ module.exports = {
         BUILD_TARGET: JSON.stringify('node'),
       },
       __IS_SERVER__: true,
+      __IS_DEV__: false,
+      __DATE__: JSON.stringify(new Date()),
+      __PROJECT_NAME__: JSON.stringify(PROJECT_NAME),
+      __BUILD_VERSION__: JSON.stringify(VERSION),
     }),
   ],
   module: {
