@@ -1,10 +1,12 @@
-const paths = require('./paths')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 
+// exclude all node_modules except ours
+const nodeModuleExcludes = /node_modules\/(?!(magic-react-kit)\/).*/
+
 const testJS = {
   test: /\.jsx?$/,
-  exclude: /node_modules/,
+  exclude: nodeModuleExcludes,
   use: {
     loader: require.resolve('babel-loader'),
     options: {
@@ -30,7 +32,6 @@ let scssLoader = [
   process.env.NODE_ENV === 'development'
     ? { loader: require.resolve('css-loader'), options: { sourceMap: true } }
     : false,
-  { loader: require.resolve('css-loader'), options: { sourceMap: true } },
   {
     loader: require.resolve('postcss-loader'),
     options: {
@@ -43,8 +44,8 @@ let scssLoader = [
 ].filter(Boolean)
 
 const testSCSS = {
-  exclude: /node_modules/,
   test: /\.scss$/,
+  exclude: nodeModuleExcludes,
   use: process.env.NODE_ENV === 'development' ? scssLoader : ExtractTextPlugin.extract(scssLoader),
 }
 
