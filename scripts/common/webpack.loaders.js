@@ -30,8 +30,9 @@ const testJS = {
 }
 let scssLoader = [
   process.env.NODE_ENV === 'development'
-    ? { loader: require.resolve('css-loader'), options: { sourceMap: true } }
+    ? { loader: require.resolve('style-loader'), options: { sourceMap: true } }
     : false,
+  { loader: require.resolve('css-loader'), options: { sourceMap: true } },
   {
     loader: require.resolve('postcss-loader'),
     options: {
