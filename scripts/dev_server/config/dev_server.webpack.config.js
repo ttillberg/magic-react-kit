@@ -12,7 +12,7 @@ module.exports = {
   name: 'SSR',
   entry: [hotScript, path.resolve(__dirname, '../server_src/index')],
   target: 'node',
-
+  devtool: 'source-map',
   output: {
     path: path.resolve(__dirname, '../server_dist'),
     filename: 'dev_server_compiled.js',

@@ -1,6 +1,8 @@
+// important: adds source map support
+require('source-map-support').install()
+
 const http = require('http')
 let app = require('./server').default
-
 const server = http.createServer(app)
 let currentApp = app
 
