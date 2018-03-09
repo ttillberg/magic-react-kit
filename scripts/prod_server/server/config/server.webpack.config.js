@@ -40,12 +40,12 @@ module.exports = {
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('development'),
-        BABEL_ENV: JSON.stringify('development'),
+        NODE_ENV: JSON.stringify('production'),
+        BABEL_ENV: JSON.stringify('production'),
         BUILD_TARGET: JSON.stringify('node'),
       },
-      __IS_SERVER__: true,
-      __IS_DEV__: false,
+      __IS_SERVER__: JSON.stringify(true),
+      __IS_DEV__: JSON.stringify(false),
       __DATE__: JSON.stringify(new Date()),
       __PROJECT_NAME__: JSON.stringify(PROJECT_NAME),
       __BUILD_VERSION__: JSON.stringify(VERSION),
