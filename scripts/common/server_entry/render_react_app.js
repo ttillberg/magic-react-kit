@@ -3,17 +3,57 @@ import { renderToString } from 'react-dom/server'
 import Helmet from 'react-helmet'
 import App from '../hot_entry/HotApp'
 
-export default function render(req, scriptHref, cb, state) {
-  const application = renderToString(<App url={req.url} onReady={cb} prefetchedState={state} />)
-  const helmet = Helmet.renderStatic()
-  const title = helmet.title.toString()
-  const meta = helmet.meta.toString()
-  const link = helmet.link.toString()
+const defaultOptions = {
+  scriptHref: '/client.js',
+  stylesHref: '/styles.css',
+}
 
-  return `<!doctype html>
-<html ${helmet.htmlAttributes.toString()}>
+export default function render(url, options, state) {
+  options = {
+    ...defaultOptions,
+    ...options,
+  }
+  const { scriptHref, stylesHref } = options
+
+  return new Promise((success, error) => {
+    const application = renderToString(
+      <App url={url} onStoreReady={success} prefetchedState={state} />
+    )
+    const helmet = Helmet.renderStatic()
+
+    const title = helmet.title.toString()
+    const meta = helmet.meta.toString()
+    const link = helmet.link.toString()
+    const head = [title, meta, link].join('')
+
+    const htmlAttributes = helmet.htmlAttributes.toString()
+
+    if (state)
+      success(
+        renderDom({
+          application,
+          state,
+          htmlAttributes,
+          head,
+          scriptHref,
+          stylesHref,
+        })
+      )
+  })
+}
+
+const renderDom = ({
+  application,
+  state,
+  htmlAttributes,
+  head,
+  scriptHref,
+  stylesHref,
+}) => `<!doctype html>
+<html ${htmlAttributes}>
 	<head>
-		${[title, meta, link].join('')}  
+		${head}
+    ${(stylesHref && `<link rel="stylesheet" href=${stylesHref} />`) || ''}
 	</head>
 	<body>
 		<div id="root">${application}</div>
@@ -21,4 +61,3 @@ export default function render(req, scriptHref, cb, state) {
 		<script src="${scriptHref}"></script>
 	</body>
 </html>`
-}

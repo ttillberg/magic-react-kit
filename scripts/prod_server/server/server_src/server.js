@@ -12,9 +12,15 @@ function startServer() {
 
   const matchOnlyPageUrls = /.*(\/|\/[a-z0-9_-]+)$/
 
+  const renderOptions = {
+    scriptHref: '/client.js',
+    stylesHref: '/styles.css',
+  }
+
   // Prerender pages
   app.get(matchOnlyPageUrls, (req, res) => {
-    render(req).then(html => {
+    render(req, renderOptions).then(html => {
+      res.setHeader('Cache-Control', 'public, max-age=600') // 10min for testing
       res.send(html)
     })
   })
