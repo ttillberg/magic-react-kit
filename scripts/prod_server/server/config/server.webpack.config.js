@@ -33,6 +33,9 @@ module.exports = {
       APP_PATH,
       path.resolve(__dirname, 'server_src'),
     ],
+    alias: {
+      '@': resolveApp('src'),
+    },
   },
 
   plugins: [

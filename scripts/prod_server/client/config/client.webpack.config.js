@@ -51,6 +51,9 @@ module.exports = {
       resolveApp('node_modules'),
       resolveCommon('client_entry/index_client'),
     ],
+    alias: {
+      '@': resolveApp('src'),
+    },
   },
   module: {
     rules: require(resolveCommon('webpack.loaders')).rules,

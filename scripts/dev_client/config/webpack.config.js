@@ -48,7 +48,10 @@ module.exports = {
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
-    modules: [APP_PATH, resolveApp('node_modules'), resolveOwn('node_modules')],
+    alias: {
+      '@': resolveApp('src'),
+    },
+    modules: [resolveApp('src'), resolveApp('node_modules'), resolveOwn('node_modules')],
   },
   module: {
     rules: require(resolveCommon('webpack.loaders')).rules,

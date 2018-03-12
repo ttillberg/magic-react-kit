@@ -33,6 +33,9 @@ module.exports = {
       resolveApp('node_modules'),
       APP_PATH,
     ],
+    alias: {
+      '@': resolveApp('src'),
+    },
   },
 
   plugins: [
