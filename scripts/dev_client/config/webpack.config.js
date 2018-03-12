@@ -13,7 +13,7 @@ module.exports = {
   entry: [
     // bundle the client for webpack-dev-server
     // and connect to the provided endpoint
-    require.resolve('webpack-dev-server/client') + '?http://' + IP + ':8888/',
+    require.resolve('webpack-dev-server/client') + '?http://' + IP + ':3001/',
 
     // bundle the client for hot reloading
     // only- means to only hot reload for successful updates
@@ -24,7 +24,7 @@ module.exports = {
 
   output: {
     filename: 'bundle.js',
-    publicPath: 'http://' + IP + ':8888/',
+    publicPath: 'http://' + IP + ':3001/',
   },
 
   plugins: [

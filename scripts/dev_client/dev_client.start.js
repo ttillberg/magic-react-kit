@@ -12,7 +12,7 @@ const compiler = webpack(webpackConfig)
 
 const server = new WebpackDevServer(compiler, devServerConfig)
 var IP = '0.0.0.0'
-var listener = server.listen(8888, IP, () => {
+var listener = server.listen(3001, IP, () => {
   // retrieve listener address and port number for logging
   const host = listener.address()
   console.log(`🌶  dev-client listening on port ${host.port}`)

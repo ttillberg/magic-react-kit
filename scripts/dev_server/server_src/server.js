@@ -7,7 +7,7 @@ const app = express()
 const matchOnlyPageUrls = /.*(\/|\/[a-z0-9_-]+)$/
 
 const renderOptions = {
-  scriptHref: 'http://0.0.0.0:8888/bundle.js',
+  scriptHref: 'http://0.0.0.0:3001/bundle.js',
   stylesHref: null,
 }
 
