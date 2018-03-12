@@ -6,8 +6,6 @@ var packageData = require(resolveApp('package.json'))
 var VERSION = 'v' + packageData.version
 var PROJECT_NAME = packageData.name
 
-const { APP_PATH, APP_ENTRY } = process.env
-
 var IP = '0.0.0.0'
 
 module.exports = {
@@ -26,7 +24,6 @@ module.exports = {
 
   output: {
     filename: 'bundle.js',
-    // required to serve hot from :8888
     publicPath: 'http://' + IP + ':8888/',
   },
 
