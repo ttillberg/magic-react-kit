@@ -2,6 +2,7 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import Helmet from 'react-helmet'
 import App from '../hot_entry/HotApp'
+import configureStore from '@/store/configure_store'
 
 const defaultOptions = {
   scriptHref: '/client.js',
@@ -13,12 +14,16 @@ export default function render(url, options, state) {
     ...defaultOptions,
     ...options,
   }
+
+  const store = configureStore(state)
   const { scriptHref, stylesHref } = options
 
   return new Promise((success, error) => {
+    const fetchStore = !state
     const application = renderToString(
-      <App url={url} onStoreReady={success} prefetchedState={state} />
+      <App url={url} store={store} storeReadyCallback={fetchStore && success} />
     )
+
     const helmet = Helmet.renderStatic()
 
     const title = helmet.title.toString()

@@ -2,6 +2,7 @@
 import React from 'react'
 import { hydrate } from 'react-dom'
 import HotApp from '../hot_entry/HotApp'
+import configureStore from '@/store/configure_store'
 
 const root = document.getElementById('root')
 
@@ -14,4 +15,6 @@ ${new Date(__DATE__)}\r\n\r\n`,
   'font-size: 9px; font-family: Helvetica; font-weight: 400; line-height: 1.4em;'
 )
 
-hydrate(<HotApp />, root)
+const store = configureStore(window.__PREFETCHED_STATE__)
+
+hydrate(<HotApp store={store} />, root)
