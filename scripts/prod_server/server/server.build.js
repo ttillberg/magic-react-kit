@@ -3,9 +3,9 @@ process.env.BABEL_ENV = 'production'
 process.env.NODE_ENV = 'production'
 
 const webpack = require('webpack')
-const { resolveCommon } = require('../../common/paths')
-const create_webpack_logger = require(resolveCommon('webpack_output_handler'))
-const webpackConfig = require('./config/server.webpack.config')
+const { resolveLib } = require('../../paths')
+const create_webpack_logger = require(resolveLib('webpack_output_handler'))
+const webpackConfig = require('./server.config')
 
 module.exports = function build() {
   return new Promise((resolve, reject) => {

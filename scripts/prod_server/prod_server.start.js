@@ -1,9 +1,8 @@
 #!/usr/local/bin/node
 process.env.NODE_ENV = process.env.NODE_ENV || 'production'
 
-const paths = require('../common/paths')
+const paths = require('../paths')
 const argv = require('minimist')(process.argv)
-const appConfig = require(paths.resolveCommon('register_options'))
 
 const path = require('path')
 const rimraf = require('rimraf')

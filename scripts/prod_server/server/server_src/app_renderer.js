@@ -1,4 +1,4 @@
-import render_template from '../../../common/server_entry/render_react_app'
+import render_template from '../../../../lib/server_entry/render_react_app'
 
 export const render = (req, options) => {
   return new Promise((success, fail) => {

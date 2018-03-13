@@ -1,22 +1,19 @@
-import express from 'express'
-import render_template from '../../common/server_entry/render_react_app'
-import chalk from 'chalk'
-
-const app = express()
-
-const matchOnlyPageUrls = /.*(\/|\/[a-z0-9_-]+)$/
+const render_template = require('../../../lib/server_entry/render_react_app').default
 
 const renderOptions = {
-  scriptHref: 'http://0.0.0.0:3001/bundle.js',
+  scriptHref: '/client.js',
   stylesHref: null,
 }
 
-app.get(matchOnlyPageUrls, (req, res) => {
+module.exports = options => (req, res, next) => {
+  if (req.url.match(/\.js$/)) {
+    // return next()
+  }
   let html = render_template(req.url)
     .then(state => {
       return render_template(req.url, renderOptions, state).then(htmlWithState => {
         res.setHeader('Cache-Control', 'public, max-age=60') // 1min for testing
-        res.send(htmlWithState)
+        res.status(200).send(htmlWithState)
       })
     })
     .catch(e => {
@@ -30,6 +27,4 @@ app.get(matchOnlyPageUrls, (req, res) => {
         )
       console.log(chalk.red(e.stack))
     })
-})
-
-export default app
+}

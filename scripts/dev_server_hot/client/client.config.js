@@ -1,30 +1,29 @@
 var path = require('path')
-var { resolveOwn, resolveApp, resolveCommon } = require('../../common/paths')
+const { resolveApp, resolveOwn, resolveLib } = require('../../paths')
 var webpack = require('webpack')
 
 var packageData = require(resolveApp('package.json'))
 var VERSION = 'v' + packageData.version
 var PROJECT_NAME = packageData.name
 
-var IP = '0.0.0.0'
+const dist = path.join(__dirname, '../dist')
 
 module.exports = {
+  name: 'client',
+  target: 'web',
   devtool: 'cheap-module-eval-source-map',
   entry: [
     // bundle the client for webpack-dev-server
     // and connect to the provided endpoint
-    require.resolve('webpack-dev-server/client') + '?http://' + IP + ':3001/',
+    require.resolve('webpack-hot-middleware/client'),
 
-    // bundle the client for hot reloading
-    // only- means to only hot reload for successful updates
-    require.resolve('webpack/hot/only-dev-server'),
-
-    resolveCommon('client_entry/index_client.js'),
+    resolveLib('client_entry/index_client'),
   ],
 
   output: {
-    filename: 'bundle.js',
-    publicPath: 'http://' + IP + ':3001/',
+    filename: 'client.js',
+    path: dist,
+    publicPath: '/',
   },
 
   plugins: [
@@ -51,6 +50,6 @@ module.exports = {
     modules: [resolveApp('src'), resolveApp('node_modules'), resolveOwn('node_modules')],
   },
   module: {
-    rules: require(resolveCommon('webpack.loaders')).rules,
+    rules: require(resolveLib('webpack.loaders')).rules,
   },
 }

@@ -1,13 +1,11 @@
-const { resolveApp, resolveOwn, resolveCommon } = require('../../../common/paths')
+const { resolveApp, resolveOwn, resolveLib } = require('../../paths')
 const path = require('path')
 const webpack = require('webpack')
-const { testJS } = require(resolveCommon('webpack.loaders'))
+const { testJS } = require(resolveLib('webpack.loaders'))
 
 var packageData = require(resolveApp('package.json'))
 var VERSION = 'v' + packageData.version
 var PROJECT_NAME = packageData.name
-
-const { APP_PATH, APP_ENTRY } = process.env
 
 const APP_STRIP_NODE_MODULES = true
 const externals = APP_STRIP_NODE_MODULES ? [require('webpack-node-externals')()] : []
@@ -15,7 +13,7 @@ const externals = APP_STRIP_NODE_MODULES ? [require('webpack-node-externals')()]
 module.exports = {
   name: 'ssr-prod',
   devtool: 'source-map',
-  entry: [require.resolve('../server_src/app_renderer.js')],
+  entry: [require.resolve('./server_src/app_renderer.js')],
   target: 'node',
   output: {
     path: resolveApp('server_dist'),
@@ -30,7 +28,7 @@ module.exports = {
     modules: [
       path.resolve(resolveApp('node_modules')),
       path.resolve(resolveOwn('node_modules')),
-      APP_PATH,
+      path.resolve(resolveApp('src')),
       path.resolve(__dirname, 'server_src'),
     ],
     alias: {
@@ -59,14 +57,14 @@ module.exports = {
       {
         ...testJS,
         include: [
-          APP_PATH,
+          resolveApp('src'),
           path.resolve(__dirname, '../server_src'),
-          resolveCommon('server_entry'),
+          resolveLib('server_entry'),
         ],
       },
       {
         test: /\.scss$/,
-        include: [APP_PATH],
+        include: [resolveApp('src')],
         exclude: /node_modules/,
         use: {
           loader: require.resolve('ignore-loader'),
