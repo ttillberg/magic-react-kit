@@ -8,9 +8,13 @@ const dist = path.join(__dirname, '../dist')
 
 module.exports = {
   name: 'server',
+  mode: 'development',
   entry: [path.resolve(__dirname, 'server_entry')],
   target: 'node',
   devtool: 'source-map',
+  optimization: {
+    noEmitOnErrors: true,
+  },
   output: {
     path: dist,
     filename: 'server.js',

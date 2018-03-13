@@ -12,6 +12,7 @@ const externals = APP_STRIP_NODE_MODULES ? [require('webpack-node-externals')()]
 
 module.exports = {
   name: 'ssr-prod',
+  mode: 'production',
   devtool: 'source-map',
   entry: [require.resolve('./server_src/app_renderer.js')],
   target: 'node',
@@ -37,8 +38,6 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.NamedModulesPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),

@@ -11,6 +11,7 @@ const dist = path.join(__dirname, '../dist')
 module.exports = {
   name: 'client',
   target: 'web',
+  mode: 'development',
   devtool: 'cheap-module-eval-source-map',
   entry: [
     // bundle the client for webpack-dev-server
@@ -20,6 +21,10 @@ module.exports = {
     resolveLib('client_entry/index_client'),
   ],
 
+  optimization: {
+    noEmitOnErrors: true,
+  },
+
   output: {
     filename: 'client.js',
     path: dist,
@@ -28,8 +33,6 @@ module.exports = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('development'),

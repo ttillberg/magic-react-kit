@@ -13,6 +13,7 @@ const PROJECT_NAME = packageData.name
 
 module.exports = {
   devtool: 'source-map',
+  mode: 'production',
   entry: [resolveLib('client_entry/index_client')],
   output: {
     path: outputPath,
@@ -31,12 +32,7 @@ module.exports = {
       __PROJECT_NAME__: JSON.stringify(PROJECT_NAME),
       __API_URL__: JSON.stringify(''),
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false,
-      },
-    }),
+
     new ExtractTextPlugin({
       filename: 'static/styles.css',
       allChunks: true,
