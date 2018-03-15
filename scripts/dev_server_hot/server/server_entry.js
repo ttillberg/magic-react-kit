@@ -7,9 +7,6 @@ const renderOptions = {
 }
 
 module.exports = options => (req, res, next) => {
-  if (req.url.match(/\.js$/)) {
-    // return next()
-  }
   let html = render_template(req.url)
     .then(state => {
       return render_template(req.url, renderOptions, state).then(htmlWithState => {
@@ -18,14 +15,18 @@ module.exports = options => (req, res, next) => {
       })
     })
     .catch(e => {
-      res
-        .status(500)
-        .send(
-          `<html style="background: white;"><pre style="color:red; padding: 2em; font-size: 1.2em"><span style="font-size:5em">💣</span>\nserver side renderer\n--------------------\n\n\n${e.stack.replace(
-            /(\(|\/).*(node_modules|webpack\:)/g,
-            ''
-          )}</pre></html>`
-        )
+      // if the stack trace, use it and trim the long node_modules paths
+      const output = (e.stack && e.stack.replace(/(\(|\/).*(node_modules|webpack\:)/g, '')) || e
+
+      res.status(500).send(
+        `<html style="background: white;">
+          <pre style="color:red; padding: 2em; font-size: 1.2em">
+            <span style="font-size:5em">💣</span>
+            \nserver side renderer\n--------------------\n\n\n
+            ${output}
+          </pre>
+        </html>`
+      )
       console.log(chalk.red(e.stack))
     })
 }
