@@ -7,7 +7,7 @@ try {
   console.log(
     "Couldn't locate main App entry point, make sure the --path points to the source folder"
   )
-  process.error(1)
+  process.exit(1)
 }
 
 export default hot(module)(App)
