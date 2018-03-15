@@ -2,9 +2,7 @@ var path = require('path')
 const { resolveApp, resolveOwn, resolveLib } = require('../../paths')
 var webpack = require('webpack')
 
-var packageData = require(resolveApp('package.json'))
-var VERSION = 'v' + packageData.version
-var PROJECT_NAME = packageData.name
+const config = require(resolveLib('read_config'))
 
 const dist = path.join(__dirname, '../dist')
 
@@ -41,16 +39,18 @@ module.exports = {
       __IS_SERVER__: false,
       __IS_DEV__: true,
       __DATE__: JSON.stringify(new Date()),
-      __PROJECT_NAME__: JSON.stringify(PROJECT_NAME),
-      __BUILD_VERSION__: JSON.stringify(VERSION),
+      __PROJECT_NAME__: JSON.stringify(config.name),
+      __BUILD_VERSION__: JSON.stringify(config.version),
     }),
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      '@': resolveApp('src'),
+      '@': resolveApp(config.src),
+      __STORE_ENTRY__$: config.storeEntry,
+      __APP_ENTRY__$: config.appEntry,
     },
-    modules: [resolveApp('src'), resolveApp('node_modules'), resolveOwn('node_modules')],
+    modules: [resolveApp(config.src), resolveApp('node_modules'), resolveOwn('node_modules')],
   },
   module: {
     rules: require(resolveLib('webpack.loaders')).rules,

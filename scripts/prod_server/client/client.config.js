@@ -6,10 +6,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 
 const outputPath = resolveApp('server_dist')
-const packageData = require(resolveApp('package.json'))
-
-const VERSION = packageData.version
-const PROJECT_NAME = packageData.name
+const config = require(resolveLib('read_config'))
 
 module.exports = {
   devtool: 'source-map',
@@ -28,8 +25,8 @@ module.exports = {
       __IS_DEV__: false,
       __IS_SERVER__: false,
       __DATE__: JSON.stringify(new Date()),
-      __BUILD_VERSION__: JSON.stringify(VERSION),
-      __PROJECT_NAME__: JSON.stringify(PROJECT_NAME),
+      __BUILD_VERSION__: JSON.stringify(config.version),
+      __PROJECT_NAME__: JSON.stringify(config.name),
       __API_URL__: JSON.stringify(''),
     }),
 
@@ -41,13 +38,15 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     modules: [
-      resolveApp('src'),
+      resolveApp(config.src),
       resolveOwn('node_modules'),
       resolveApp('node_modules'),
       resolveLib('client_entry/index_client'),
     ],
     alias: {
-      '@': resolveApp('src'),
+      '@': resolveApp(config.src),
+      __STORE_ENTRY__$: config.storeEntry,
+      __APP_ENTRY__$: config.appEntry,
     },
   },
   module: {

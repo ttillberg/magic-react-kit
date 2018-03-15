@@ -1,8 +1,9 @@
 const webpack = require('webpack')
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
-
 const { resolveApp, resolveOwn, resolveLib } = require('../../paths')
+
+const config = require(resolveLib('read_config'))
 
 const dist = path.join(__dirname, '../dist')
 
@@ -33,10 +34,12 @@ module.exports = {
       path.resolve(__dirname, './server_src'), // server modules
       resolveOwn('node_modules'),
       resolveApp('node_modules'),
-      resolveApp('src'),
+      resolveApp(config.src),
     ],
     alias: {
-      '@': resolveApp('src'),
+      '@': resolveApp(config.src),
+      __STORE_ENTRY__$: config.storeEntry,
+      __APP_ENTRY__$: config.appEntry,
     },
   },
 
