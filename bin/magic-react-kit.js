@@ -12,6 +12,7 @@ const spawn = require('cross-spawn')
 var scripts = {
   start: require.resolve('../scripts/dev_server_hot/dev_server_hot.start'),
   build: require.resolve('../scripts/prod_server/prod_server.start'),
+  test: require.resolve('../scripts/test/test.start'),
 }
 
 var argv = require('minimist')(process.argv)
