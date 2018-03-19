@@ -20,10 +20,10 @@ module.exports = options => (req, res, next) => {
 
       res.status(500).send(
         `<html style="background: white;">
-          <pre style="color:red; padding: 2em; font-size: 1.2em">
-            <span style="font-size:5em">💣</span>
-            \nserver side renderer\n--------------------\n\n\n
-            ${output}
+          <pre style="color:red; padding: 2em; font-size: 1.2em"><span style="font-size:5em">💣</span>
+            \nserver side renderer
+            \n--------------------\n\n
+            \n${output}
           </pre>
         </html>`
       )
