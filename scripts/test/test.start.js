@@ -17,4 +17,5 @@ const config = {
   },
 }
 
-jest.run(['--no-cache', '--config', JSON.stringify(config)])
+var args = process.argv.slice(2)
+jest.run(['--no-cache', '--config', JSON.stringify(config)].concat(args))
