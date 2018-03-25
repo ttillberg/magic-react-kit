@@ -1,4 +1,4 @@
-const chalk = require('chalk')
+// const chalk = require('chalk')
 const render_template = require('../../../lib/server_entry/render_react_app').default
 
 const renderOptions = {
@@ -27,6 +27,6 @@ module.exports = options => (req, res, next) => {
           </pre>
         </html>`
       )
-      console.log(chalk.red(e.stack))
+      console.log(e.stack)
     })
 }
