@@ -20,6 +20,7 @@ module.exports = {
     path: dist,
     filename: 'server.js',
     libraryTarget: 'commonjs2',
+    publicPath: '/',
   },
   externals: [
     nodeExternals({

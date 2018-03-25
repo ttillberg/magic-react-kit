@@ -6,7 +6,13 @@ const { testJS } = require(resolveLib('webpack.loaders'))
 const config = require(resolveLib('read_config'))
 
 const APP_STRIP_NODE_MODULES = true
-const externals = APP_STRIP_NODE_MODULES ? [require('webpack-node-externals')()] : []
+const externals = APP_STRIP_NODE_MODULES
+  ? [
+      require('webpack-node-externals')({
+        whitelist: [/magic-react-kit/],
+      }),
+    ]
+  : []
 
 module.exports = {
   name: 'ssr-prod',

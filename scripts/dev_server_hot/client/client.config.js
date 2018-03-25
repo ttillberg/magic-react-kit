@@ -14,7 +14,7 @@ module.exports = {
   entry: [
     // bundle the client for webpack-dev-server
     // and connect to the provided endpoint
-    require.resolve('webpack-hot-middleware/client'),
+    require.resolve('webpack-hot-middleware/client') + '?http://localhost:3000',
 
     resolveLib('client_entry/index_client'),
   ],
