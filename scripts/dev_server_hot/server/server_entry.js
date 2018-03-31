@@ -15,7 +15,9 @@ module.exports = options => (req, res, next) => {
     })
     .catch(e => {
       // if the stack trace, use it and trim the long node_modules paths
-      const output = (e.stack && e.stack.replace(/(\(|\/).*(node_modules|webpack\:)/g, '')) || e
+      const output =
+        (e.stack && e.stack.replace(/at.+(?=react-runtime|node_modules|webpack\:)/g, 'at ... ')) ||
+        e
 
       res.status(500).send(
         `<html style="background: white;">
@@ -23,6 +25,7 @@ module.exports = options => (req, res, next) => {
             \nserver side renderer
             \n--------------------\n\n
             \n${output}
+            \n<!--${e.stack}-->
           </pre>
         </html>`
       )
