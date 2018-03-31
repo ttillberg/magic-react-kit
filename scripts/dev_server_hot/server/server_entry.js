@@ -1,4 +1,3 @@
-// const chalk = require('chalk')
 const render_template = require('../../../lib/server_entry/render_react_app').default
 
 const renderOptions = {

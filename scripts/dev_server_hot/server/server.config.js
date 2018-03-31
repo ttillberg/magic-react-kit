@@ -39,8 +39,8 @@ module.exports = {
     ],
     alias: {
       '@': resolveApp(config.src),
-      __STORE_ENTRY__$: config.storeEntry,
-      __APP_ENTRY__$: config.appEntry,
+      __STORE_ENTRY_ALIAS__$: config.storeEntry,
+      __APP_ENTRY_ALIAS__$: config.appEntry,
     },
   },
 

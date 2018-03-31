@@ -47,8 +47,8 @@ module.exports = {
     extensions: ['.js', '.jsx'],
     alias: {
       '@': resolveApp(config.src),
-      __STORE_ENTRY__$: config.storeEntry,
-      __APP_ENTRY__$: config.appEntry,
+      __STORE_ENTRY_ALIAS__$: config.storeEntry,
+      __APP_ENTRY_ALIAS__$: config.appEntry,
     },
     modules: [resolveApp(config.src), resolveApp('node_modules'), resolveOwn('node_modules')],
   },
