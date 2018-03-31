@@ -1,7 +1,7 @@
 🌶🌶🌶
 
-script playground for webkit+react
+A collection of tools to run react apps. The main motivation being to isolate the webpack boilerplate code and configuration from the actual app.
 
-* Client and Server HMR
-* Async Server Side Rendering
-* Testing
+* client and server-side hot-module-reloading
+* async server side rendering
+* testing

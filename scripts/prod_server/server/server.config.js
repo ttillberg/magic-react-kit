@@ -9,7 +9,7 @@ const APP_STRIP_NODE_MODULES = true
 const externals = APP_STRIP_NODE_MODULES
   ? [
       require('webpack-node-externals')({
-        whitelist: [/magic-react-kit/],
+        whitelist: [/react\-runtime/],
       }),
     ]
   : []

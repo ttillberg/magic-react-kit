@@ -1,9 +1,9 @@
 {
-  "name": "magic-react-kit",
+  "name": "react-runtime",
   "version": "1.1.0",
   "description": "wip",
   "bin": {
-    "magic-react-kit": "./bin/magic-react-kit.js"
+    "react-runtime": "./bin/react-runtime.js"
   },
   "author": "",
   "license": "ISC",
