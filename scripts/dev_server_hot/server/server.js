@@ -13,8 +13,8 @@ const compiler = webpack(config)
 app.use(
   webpackDevMiddleware(compiler, {
     serverSideRender: true,
-    noInfo: true,
     publicPath: config[0].output.publicPath,
+    stats: 'errors-only',
   })
 )
 
