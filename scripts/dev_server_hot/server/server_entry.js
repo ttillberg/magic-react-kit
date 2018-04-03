@@ -16,7 +16,10 @@ module.exports = options => (req, res, next) => {
     .catch(e => {
       // if the stack trace, use it and trim the long node_modules paths
       const output =
-        (e.stack && e.stack.replace(/at.+(?=react-runtime|node_modules|webpack\:)/g, 'at ... ')) ||
+        (e.stack &&
+          e.stack
+            .replace(/at.+(?=react-runtime|node_modules)/g, 'at ... ')
+            .replace(/at.+(webpack\:)/g, 'at ')) ||
         e
 
       res.status(500).send(
